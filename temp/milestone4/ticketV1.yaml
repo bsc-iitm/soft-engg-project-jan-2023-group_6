@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: PIND 0.1
   description: PIND doc description
-  version: '0.1'
+  version: "0.1"
 servers:
   - url: http://127.0.0.1:5000
     variables: {}
@@ -15,7 +15,7 @@ paths:
   /ticket:
     description: operations related to tickets
     post:
-      summary: ''
+      summary: ""
       description: create a new ticket for a given user id (student only)
       requestBody:
         content:
@@ -41,7 +41,7 @@ paths:
                     - Operational
       operationId: ticket1
       responses:
-        '201':
+        "201":
           description: sample success response - return newly created ticket
           content:
             application/json:
@@ -57,22 +57,22 @@ paths:
                     categories:
                       - XYZ
                       - Operational
-        '400':
-          description: bad request response
+        "400":
+          description: sample bad request response
           content:
             application/json:
               examples:
                 400 result:
                   value: bad request
-        '401':
+        "401":
           description: sample unauthorized response
           content:
             application/json:
               examples:
                 401 result:
                   value: you are not authorized to make this request
-        '500':
-          description: internal error response
+        "500":
+          description: sample internal error response
           content:
             application/json:
               examples:
@@ -80,24 +80,89 @@ paths:
                   value: internal error
       tags:
         - ticket
+    get:
+      summary: ""
+      description: get paginated tickets for a user
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            description: page number
+            example: 1
+
+        - in: query
+          name: size
+          schema:
+            type: integer
+            description: maximum tickets in the response
+            example: 2
+
+      operationId: ticket2
+      responses:
+        "200":
+          description: sample success response - return tickets
+          content:
+            application/json:
+              examples:
+                200 result:
+                  value:
+                    tickets:
+                      - {
+                          ticket_id: 3,
+                          user_id: 2,
+                          deets: I am unable to  access course XYZ,
+                          status: Open,
+                          replies: [],
+                          likes: 0,
+                          categories: [XYZ, Operational],
+                        }
+                      - {
+                          ticket_id: 4,
+                          user_id: 2,
+                          deets: Regarding graded assignment,
+                          status: Open,
+                          replies: [],
+                          likes: 2,
+                          categories: [Graded],
+                        }
+
+        "404":
+          description: sample not found response
+          content:
+            application/json:
+              examples:
+                404 result:
+                  value: no tickets found
+
+        "500":
+          description: sample internal error response
+          content:
+            application/json:
+              examples:
+                500 result:
+                  value: internal error
+      tags:
+        - ticket
+
   /ticket/{ticketId}:
     description: Specific ticket details
     get:
-      summary: ''
+      summary: ""
       description: get ticket details by ticketId
       parameters:
-      - name: ticketId
-        description: id of ticket
-        required: true
-        in: path
-        schema:
-          type: integer
-          example: 3
-        
-      operationId: ticket2
+        - name: ticketId
+          description: id of ticket
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 3
+
+      operationId: ticketB1
       responses:
-        '200':
-          description: sample success response - return newly created ticket
+        "200":
+          description: sample success response - return ticket
           content:
             application/json:
               examples:
@@ -112,22 +177,152 @@ paths:
                     categories:
                       - XYZ
                       - Operational
-                  
-        '404':
-          description: not found response
+
+        "404":
+          description: sample not found response
           content:
             application/json:
               examples:
                 404 result:
                   value: ticket not found
 
-        '500':
-          description: internal error response
+        "500":
+          description: sample internal error response
           content:
             application/json:
               examples:
                 500 result:
                   value: internal error
-      
+
+      tags:
+        - ticket
+    put:
+      summary: ""
+      description: update a given ticket
+      parameters:
+        - name: ticketId
+          description: id of ticket
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 3
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                deets:
+                  type: string
+                  example: I am unable to access course XYZ since yesterday
+                categories:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - XYZ2
+                    - Operational
+      operationId: ticketB2
+      responses:
+        "200":
+          description: sample success response - return updated ticket
+          content:
+            application/json:
+              examples:
+                200 result:
+                  value:
+                    ticket_id: 3
+                    user_id: 2
+                    deets: I am unable to  access course XYZ2 since yesterday
+                    status: Open
+                    replies: []
+                    likes: 0
+                    categories:
+                      - XYZ2
+                      - Operational
+        "400":
+          description: sample bad request response
+          content:
+            application/json:
+              examples:
+                400 result:
+                  value: bad request
+        "401":
+          description: sample unauthorized response
+          content:
+            application/json:
+              examples:
+                401 result:
+                  value: you are not authorized to make this request
+        "404":
+          description: sample not found response
+          content:
+            application/json:
+              examples:
+                404 result:
+                  value: ticket not found
+        "500":
+          description: sample internal error response
+          content:
+            application/json:
+              examples:
+                500 result:
+                  value: internal error
+      tags:
+        - ticket
+    delete:
+      summary: ""
+      description: update a given ticket
+      parameters:
+        - name: ticketId
+          description: id of ticket
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 3
+
+      operationId: ticketB3
+      responses:
+        "200":
+          description: sample success response - deleted successfully
+          content:
+            application/json:
+              examples:
+                200 result:
+                  value:
+                    status: true
+                    message: deleted successfully
+        "400":
+          description: sample bad request response
+          content:
+            application/json:
+              examples:
+                400 result:
+                  value: bad request
+        "401":
+          description: sample unauthorized response
+          content:
+            application/json:
+              examples:
+                401 result:
+                  value: you are not authorized to make this request
+
+        "404":
+          description: sample not found response
+          content:
+            application/json:
+              examples:
+                401 result:
+                  value: ticket not found
+
+        "500":
+          description: sample internal error response
+          content:
+            application/json:
+              examples:
+                500 result:
+                  value: internal error
       tags:
         - ticket
