@@ -1,0 +1,133 @@
+openapi: 3.0.3
+info:
+  title: PIND 0.1
+  description: PIND doc description
+  version: '0.1'
+servers:
+  - url: http://127.0.0.1:5000
+    variables: {}
+tags:
+  - name: ticket
+    description: everything about tickets
+  - name: staff actions
+    description: actions that can only be performed by staff
+paths:
+  /ticket:
+    description: operations related to tickets
+    post:
+      summary: ''
+      description: create a new ticket for a given user id (student only)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                  example: 2
+                deets:
+                  type: string
+                  example: I am unable to access course XYZ
+                date:
+                  type: integer
+                  example: 1231231
+                categories:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - XYZ
+                    - Operational
+      operationId: ticket1
+      responses:
+        '201':
+          description: sample success response - return newly created ticket
+          content:
+            application/json:
+              examples:
+                201 result:
+                  value:
+                    ticket_id: 3
+                    user_id: 2
+                    deets: I am unable to  access course XYZ
+                    status: Open
+                    replies: []
+                    likes: 0
+                    categories:
+                      - XYZ
+                      - Operational
+        '400':
+          description: bad request response
+          content:
+            application/json:
+              examples:
+                400 result:
+                  value: bad request
+        '401':
+          description: sample unauthorized response
+          content:
+            application/json:
+              examples:
+                401 result:
+                  value: you are not authorized to make this request
+        '500':
+          description: internal error response
+          content:
+            application/json:
+              examples:
+                500 result:
+                  value: internal error
+      tags:
+        - ticket
+  /ticket/{ticketId}:
+    description: Specific ticket details
+    get:
+      summary: ''
+      description: get ticket details by ticketId
+      parameters:
+      - name: ticketId
+        description: id of ticket
+        required: true
+        in: path
+        schema:
+          type: integer
+          example: 3
+        
+      operationId: ticket2
+      responses:
+        '200':
+          description: sample success response - return newly created ticket
+          content:
+            application/json:
+              examples:
+                200 result:
+                  value:
+                    ticket_id: 3
+                    user_id: 2
+                    deets: I am unable to  access course XYZ
+                    status: Open
+                    replies: []
+                    likes: 0
+                    categories:
+                      - XYZ
+                      - Operational
+                  
+        '404':
+          description: not found response
+          content:
+            application/json:
+              examples:
+                404 result:
+                  value: ticket not found
+
+        '500':
+          description: internal error response
+          content:
+            application/json:
+              examples:
+                500 result:
+                  value: internal error
+      
+      tags:
+        - ticket
