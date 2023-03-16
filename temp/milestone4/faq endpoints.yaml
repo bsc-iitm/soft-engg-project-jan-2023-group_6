@@ -1,0 +1,147 @@
+openapi: 3.0.3
+info:
+  title: PIND
+  version: '0.1'
+  description: PIND doc description
+servers:
+  - url: http://127.0.0.1:5000
+    variables: {}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  - name: faq
+    description: everything related to FAQs
+  - name: ticket
+    description: everything about tickets
+  - name: staff actions
+    description: actions that can only be performed by staff
+  - name: user
+    description: user registration and login
+paths:
+  /faq:
+    description: operations related to faqs
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - faq
+        - staff only
+      summary: ''
+      description: create a new faq (staff only)
+      operationId: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                staffId:
+                  type: integer
+                  example: 4
+                ticketId:
+                  type: integer
+                  example: 12
+      responses:
+        '201':
+          description: return newly created faq
+          content:
+            application/json:
+              examples:
+                201 result:
+                  value:
+                    faqId: 1
+                    title: >-
+                      Does IIT Madras offer B.Sc in Programming & Data Science
+                      on-campus?
+                    soltuion: >-
+                      No, there is no equivalent on-campus version. IIT Madras
+                      has carefully curated this exclusively as an online
+                      program.
+                    categories:
+                      - General
+        '400':
+          description: sample bad request response
+          content:
+            application/json:
+              examples:
+                400 result:
+                  value: bad request
+        '401':
+          description: sample unauthorized response
+          content:
+            application/json:
+              examples:
+                401 result:
+                  value: you are not authorized to make this request
+        '404':
+          description: sample not found response
+          content:
+            application/json:
+              examples:
+                404 result:
+                  value: ticket not found
+        '500':
+          description: sample internal error response
+          content:
+            application/json:
+              examples:
+                500 result:
+                  value: internal error
+    get:
+      tags:
+        - faq
+      summary: ''
+      description: get all available faqs
+      operationId: ''
+      responses:
+        '200':
+          description: all faqs
+          content:
+            application/json:
+              examples:
+                200 result:
+                  value:
+                    faqs:
+                      - faqId: 1
+                        title: >-
+                          Does IIT Madras offer B.Sc in Programming & Data
+                          Science on-campus?
+                        soltuion: >-
+                          No, there is no equivalent on-campus version. IIT
+                          Madras has carefully curated this exclusively as an
+                          online program.
+                        categories:
+                          - General
+        '400':
+          description: sample bad request response
+          content:
+            application/json:
+              examples:
+                400 result:
+                  value: bad request
+        '401':
+          description: sample unauthorized response
+          content:
+            application/json:
+              examples:
+                401 result:
+                  value: you are not authorized to make this request
+        '404':
+          description: sample not found response
+          content:
+            application/json:
+              examples:
+                404 result:
+                  value: ticket not found
+        '500':
+          description: sample internal error response
+          content:
+            application/json:
+              examples:
+                500 result:
+                  value: internal error
