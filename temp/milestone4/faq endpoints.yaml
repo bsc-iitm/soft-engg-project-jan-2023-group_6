@@ -111,12 +111,20 @@ paths:
                         title: >-
                           Does IIT Madras offer B.Sc in Programming & Data
                           Science on-campus?
-                        soltuion: >-
+                        solution: >-
                           No, there is no equivalent on-campus version. IIT
                           Madras has carefully curated this exclusively as an
                           online program.
                         categories:
                           - General
+                      - faqId: 23
+                        title: >-
+                          I ran into an error or issue in the application form. What do I do?
+                        solution: >-
+                          Please send us your registered email ID and a screenshot of the error / issue with relevant description to support@onlinedegeree.iitm.ac.in
+                          If the error is after payment has been made, please forward the confirmation email from Razorpay along with email ID, application number and screenshot with description.
+                        categories:
+                          - Application
         '400':
           description: sample bad request response
           content:
