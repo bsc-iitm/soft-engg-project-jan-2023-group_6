@@ -84,7 +84,7 @@ paths:
             application/json:
               examples:
                 404 result:
-                  value: ticket not found
+                  value: faq not found
         '500':
           description: sample internal error response
           content:
@@ -100,7 +100,7 @@ paths:
       operationId: ''
       responses:
         '200':
-          description: all faqs
+          description: returns list of all faqs
           content:
             application/json:
               examples:
@@ -137,7 +137,111 @@ paths:
             application/json:
               examples:
                 404 result:
-                  value: ticket not found
+                  value: faq not found
+        '500':
+          description: sample internal error response
+          content:
+            application/json:
+              examples:
+                500 result:
+                  value: internal error
+  /faq/{faqId}:
+    description: operations related to a particular faq
+    parameters:
+      - name: faqId
+        description: id of faq
+        required: true
+        in: path
+        schema:
+          type: integer
+          example: 4
+    # put:
+    #   security:
+    #     - bearerAuth: []
+    #   tags:
+    #     - faq
+    #     - staff only
+    #   summary: ''
+    #   description: update a particular faq
+    #   operationId: ''
+    #   responses:
+    #     '200':
+    #       description: deleted successfully
+    #       content:
+    #         application/json:
+    #           examples:
+    #             200 result:
+    #               value:
+    #                 status: true
+    #                 message: faq deleted successfully
+    #     '400':
+    #       description: sample bad request response
+    #       content:
+    #         application/json:
+    #           examples:
+    #             400 result:
+    #               value: bad request
+    #     '401':
+    #       description: sample unauthorized response
+    #       content:
+    #         application/json:
+    #           examples:
+    #             401 result:
+    #               value: you are not authorized to make this request
+    #     '404':
+    #       description: sample not found response
+    #       content:
+    #         application/json:
+    #           examples:
+    #             404 result:
+    #               value: faq not found
+    #     '500':
+    #       description: sample internal error response
+    #       content:
+    #         application/json:
+    #           examples:
+    #             500 result:
+    #               value: internal error
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - faq
+        - staff only
+      summary: ''
+      description: delete a particular faq
+      operationId: ''
+      responses:
+        '200':
+          description: deleted successfully
+          content:
+            application/json:
+              examples:
+                200 result:
+                  value:
+                    status: true
+                    message: faq deleted successfully
+        '400':
+          description: sample bad request response
+          content:
+            application/json:
+              examples:
+                400 result:
+                  value: bad request
+        '401':
+          description: sample unauthorized response
+          content:
+            application/json:
+              examples:
+                401 result:
+                  value: you are not authorized to make this request
+        '404':
+          description: sample not found response
+          content:
+            application/json:
+              examples:
+                404 result:
+                  value: faq not found
         '500':
           description: sample internal error response
           content:
