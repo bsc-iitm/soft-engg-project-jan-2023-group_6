@@ -1,0 +1,95 @@
+openapi: 3.0.3
+info:
+  title: PIND 0.1
+  description: PIND doc description
+  version: "0.1"
+servers:
+  - url: http://127.0.0.1:5000
+    variables: {}
+tags:
+  - name: ticket
+    description: everything about tickets
+  - name: staff actions
+    description: actions that can only be performed by staff
+  - name: user
+    description: user registration and login
+paths:
+  /register:
+    description: register new user
+    post:
+      tags:
+        - user
+      summary: ""
+      description: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: andrew@support.iitm.ac.in
+                user_type:
+                  type: string
+                  example: staff
+                password:
+                  type: string
+                  example: underwearsarethebest
+              required:
+                - email
+                - password
+                - user_type
+      operationId: userGen
+      responses:
+        '200':
+          description: User registered successfully  
+        '401':
+          description: Conflict
+          content:
+            application/json:
+              examples:
+                401 result:
+                  value: account already exists with this email 
+  /login:
+    post:
+      tags: 
+        - user
+      summary: ""
+      description: Log in an existing user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: andrew@support.iitm.ac.in
+                password:
+                  type: string
+                  example: pass1234
+              required:
+                - email
+                - password
+      operationId: userLogin
+      responses:
+        '200':
+          description: User authenticated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    example: XcisyoBcluyhsBVLUKBVF
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              examples:
+                401 result:
+                  value: email and password do not match    
