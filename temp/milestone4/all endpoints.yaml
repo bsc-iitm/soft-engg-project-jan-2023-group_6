@@ -59,7 +59,68 @@ paths:
             application/json:
               examples:
                 401 result:
-                  value: account already exists with this email 
+                  value: account already exists with this email
+  /user/{userId}/list:
+    get:
+      summary: ''
+      description: get all generated tickets of a user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            description: id of user
+            example: 2
+      operationId: user1
+      responses:
+        '200':
+          description: sample success response - return tickets
+          content:
+            application/json:
+              examples:
+                200 result:
+                  value:
+                    tickets: 
+                      - {
+                        ticketId: 3,
+                        userId: 2,
+                        deets: I am unable to  access course XYZ,
+                        status: Open,
+                        replies: [],
+                        likes: 0,
+                        categories: [XYZ, Operational],
+                        linkedTicket: null,
+                          
+                      }
+                      - {
+                        ticketId: 4,
+                        userId: 2,
+                        deets: Regarding graded assignment,
+                        status: Open,
+                        replies: [],
+                        likes: 2,
+                        categories: [Graded],
+                        linkedTicket: null,
+                      }
+                    
+        '404':
+          description: sample not found response
+          content:
+            application/json:
+              examples:
+                404 result:
+                  value: no tickets found
+
+        '500':
+          description: sample internal error response
+          content:
+            application/json:
+              examples:
+                500 result:
+                  value: internal error
+      tags:
+        - ticket
   /login:
     post:
       tags: 
@@ -172,7 +233,7 @@ paths:
         - ticket
     get:
       summary: ''
-      description: get paginated tickets for a user
+      description: get paginated tickets
       parameters:
         - in: query
           name: page
@@ -211,7 +272,7 @@ paths:
                       }
                       - {
                         ticketId: 4,
-                        userId: 2,
+                        userId: 6,
                         deets: Regarding graded assignment,
                         status: Open,
                         replies: [],
