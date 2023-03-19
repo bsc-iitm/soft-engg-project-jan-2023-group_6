@@ -39,9 +39,6 @@ paths:
                 userId:
                   type: integer
                   example: 4
-                ticketId:
-                  type: integer
-                  example: 12
       responses:
         '201':
           description: sucessfully marked as solved
@@ -104,9 +101,6 @@ paths:
                 userId:
                   type: integer
                   example: 4
-                ticketId:
-                  type: integer
-                  example: 12
       operationId: likeTicket
       responses:
         '200':
