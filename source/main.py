@@ -1,13 +1,19 @@
+import json
+
 from flask import Flask, request, make_response, jsonify
 
-from config import config_mapping
+from config import SECRET_KEY, SQLALCHEMY_DATABASE_URI
 from database import db
-from models import Faq
+from models import User, Faq
+from helpers import generate_password_hash, verify_password
 
 
 
 app = Flask(__name__)
-app.config.from_mapping(config_mapping)
+app.config.update(
+    SECRET_KEY=SECRET_KEY,
+    SQLALCHEMY_DATABASE_URI=SQLALCHEMY_DATABASE_URI
+)
 db.init_app(app)
 
 
@@ -15,6 +21,22 @@ db.init_app(app)
 @app.route('/', methods=['GET'])
 def home():
     return "You have found this API. Badhai ho"
+
+@app.route('/register', methods=['POST'])
+def register():
+    data = json.loads(request.data)
+    hashed_password = generate_password_hash(data['password'])
+    new_user = User(
+        name=data['name'],
+        username=data['username'],
+        email=data['email'],
+        password=hashed_password,
+        admin=data['admin']
+    )
+    db.session.add(new_user)
+    db.session.commit()
+    return {'success': True}
+
 
 @app.route('/faq', methods=['GET'])
 def all_faqs():
