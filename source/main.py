@@ -1,20 +1,13 @@
-import os
-
 from flask import Flask, request, make_response, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
+from config import config_mapping
+from database import db
 
 
-curr_dir = os.path.abspath(os.path.dirname(__name__))
-config = {
-    "SECRET_KEY": "mySuperDuperOmegaGigaChadSecretKey",
-    "SQLALCHEMY_DATABASE_URI": "sqlite:///" + os.path.join(curr_dir, 'database.sqlite3'),
-}
 
 app = Flask(__name__)
-app.config.from_mapping(config)
-
-db = SQLAlchemy()
+app.config.from_mapping(config_mapping)
 db.init_app(app)
 
 
