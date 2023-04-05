@@ -1,11 +1,11 @@
 import json
 
-from flask import Flask, request, make_response, jsonify
+from flask import Flask, request
 
 from config import SECRET_KEY, SQLALCHEMY_DATABASE_URI
 from database import db
 from models import User, Faq
-from helpers import generate_password_hash, verify_password
+from helpers import generate_password_hash, authenticate_user, token_required
 
 
 
@@ -37,6 +37,11 @@ def register():
     db.session.commit()
     return {'success': True}
 
+@app.route('/login', methods=['POST'])
+def login():
+    auth_details = dict(request.authorization)
+    auth_data = authenticate_user(auth_details)
+    return auth_data
 
 @app.route('/faq', methods=['GET'])
 def all_faqs():
