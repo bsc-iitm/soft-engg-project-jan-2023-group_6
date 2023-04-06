@@ -10,6 +10,34 @@ class User(db.Model):
     password = db.Column(db.String(), nullable=False, unique=False)
     email = db.Column(db.String(), nullable=False, unique=True)
     admin = db.Column(db.Boolean(), unique=False, default=False)
+    
+    tickets = db.relationship("Ticket", backref="user", cascade="all, delete-orphan")
+    # categories
+    # comments (optional)
+
+
+class Ticket(db.Model):
+    __tablename__ = 'ticket'
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
+    title = db.Column(db.String(), nullable=False)
+    content = db.Column(db.String(), nullable=False)
+    date = db.Column(db.DateTime(), nullable=False, unique=False)
+    status = db.Column(db.DateTime(), nullable=False, unique=False)
+    user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False, unique=False)
+    likes = db.Column(db.Integer(), nullable=False, uniqe=False, default=0)
+    
+    # comments
+
+    @property
+    def serialized(self):
+        return {
+            'title': self.title,
+            'content': self.content,
+            'date': self.date,
+            'status': self.status,
+            'user_id': self.user_id,
+            'likes': self.likes
+        }
 
 
 class Faq(db.Model):
@@ -17,6 +45,8 @@ class Faq(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     title = db.Column(db.String(), nullable=False)
     content = db.Column(db.String(), nullable=False)
+
+    # categories
 
     @property
     def serialized(self):
