@@ -21,8 +21,8 @@ class Ticket(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     title = db.Column(db.String(), nullable=False, unique=False)
     content = db.Column(db.String(), nullable=False, unique=False)
-    date = db.Column(db.DateTime(), nullable=False, unique=False)
-    status = db.Column(db.DateTime(), nullable=False, unique=False)
+    date = db.Column(db.String(), nullable=False, unique=False)
+    status = db.Column(db.String(), nullable=False, unique=False)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False, unique=False)
     likes = db.Column(db.Integer(), nullable=False, unique=False, default=0)
     
