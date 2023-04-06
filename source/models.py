@@ -19,8 +19,8 @@ class User(db.Model):
 class Ticket(db.Model):
     __tablename__ = 'ticket'
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    title = db.Column(db.String(), nullable=False)
-    content = db.Column(db.String(), nullable=False)
+    title = db.Column(db.String(), nullable=False, unique=False)
+    content = db.Column(db.String(), nullable=False, unique=False)
     date = db.Column(db.DateTime(), nullable=False, unique=False)
     status = db.Column(db.DateTime(), nullable=False, unique=False)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False, unique=False)
