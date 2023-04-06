@@ -4,7 +4,7 @@ from flask import Flask, request
 
 from config import SECRET_KEY, SQLALCHEMY_DATABASE_URI
 from database import db
-from models import User, Faq
+from models import User, Faq, Ticket
 from helpers import generate_password_hash, authenticate_user, token_required
 
 
@@ -42,6 +42,23 @@ def login():
     auth_details = dict(request.authorization)
     auth_data = authenticate_user(auth_details)
     return auth_data
+
+@app.route('/ticket', methods=['POST'])
+@token_required
+def create_ticket(current_user):
+    ticket_data = json.loads(request.data)
+    new_ticket = Ticket(
+        title=ticket_data['title'],
+        content=ticket_data['content'],
+        date=ticket_data['date'],
+        status='Open',
+        user_id=current_user.id,
+        likes=0
+    )
+    db.session.add(new_ticket)
+    db.session.commit()
+    return {'success': True}
+
 
 @app.route('/faq', methods=['GET'])
 def all_faqs():
