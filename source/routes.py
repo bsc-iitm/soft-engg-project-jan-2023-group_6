@@ -34,21 +34,24 @@ def login():
 @appc.route('/ticket', methods=['POST'])
 @token_required
 def create_ticket(current_user):
-    if(current_user.admin == 1):
-        return "Forbidden",403
-    
-    ticket_data = json.loads(request.data)
-    new_ticket = Ticket(
-        title=ticket_data['title'],
-        content=ticket_data['content'],
-        date=ticket_data['date'],
-        status='Open',
-        user_id=current_user.id,
-        likes=0
-    )
-    db.session.add(new_ticket)
-    db.session.commit()
-    return {'success': True}
+    try:
+        if(current_user.admin == 1):
+            return "Forbidden",403
+        
+        ticket_data = json.loads(request.data)
+        new_ticket = Ticket(
+            title=ticket_data['title'],
+            content=ticket_data['content'],
+            date=ticket_data['date'],
+            status='Open',
+            user_id=current_user.id,
+            likes=0
+        )
+        db.session.add(new_ticket)
+        db.session.commit()
+        return {'success': True}
+    except:
+        return 'Bad Request',400
 
 
 @appc.route('/faq', methods=['GET'])

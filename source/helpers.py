@@ -62,8 +62,8 @@ def token_required(func):
                 return make_response(jsonify("Invalid credentials"), 401)
             current_user = User.query.filter_by(username=username).first()
             if current_user is None:
-                return make_response(jsonify('Unauthorized request'), 401)
+                return make_response(jsonify('Unauthorized request1'), 401)
             return func(current_user, *args, **kwargs)
         except:
-            return make_response(jsonify('Unauthorized request'), 401)
+            return make_response(jsonify('Unauthorized request2'), 401)
     return verify_token

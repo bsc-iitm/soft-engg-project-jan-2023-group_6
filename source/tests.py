@@ -54,5 +54,67 @@ def test_create_ticket_admin(client):
     assert b"Forbidden" in response.data
     assert(len(tickets)) == 0
 
+def test_create_ticket_student(client):
+    assert len(Ticket.query.all()) == 0
+    auth_details = authenticate_user({"username": "pankaj", "password": "pankaj123"})
+    response = client.post('/ticket', json={
+        "date": "123123123", 
+        "title": "test test1", 
+        "content": "test_create_ticket_without_auth"
+    }, headers={
+        "authorization": "bearer "+auth_details['access_token']
+    })
+
+    assert response.status_code == 200
+
+    tickets = Ticket.query.filter_by(user_id=auth_details['user_details']['id']).all()
+    assert len(tickets)==1
+    for ticket in tickets:
+        assert ticket.date == "123123123"
+        assert ticket.title == "test test1"
+        assert ticket.content == "test_create_ticket_without_auth"
+        assert ticket.status == "Open"
+        assert ticket.likes == 0
+
+def test_create_ticket_student_extrajson(client):
+    assert len(Ticket.query.all()) == 0
+    auth_details = authenticate_user({"username": "pankaj", "password": "pankaj123"})
+    response = client.post('/ticket', json={
+        "date": "123123123", 
+        "title": "test test1", 
+        "content": "test_create_ticket_without_auth",
+        "likes": 100,
+        "status": "Closed",
+    }, headers={
+        "authorization": "bearer "+auth_details['access_token']
+    })
+
+    assert response.status_code == 200
+
+    tickets = Ticket.query.filter_by(user_id=auth_details['user_details']['id']).all()
+    assert len(tickets)==1
+    for ticket in tickets:
+        assert ticket.date == "123123123"
+        assert ticket.title == "test test1"
+        assert ticket.content == "test_create_ticket_without_auth"
+        assert ticket.status == "Open"
+        assert ticket.likes == 0
+
+def test_create_ticket_student_incompletejson(client):
+    assert len(Ticket.query.all()) == 0
+    auth_details = authenticate_user({"username": "pankaj", "password": "pankaj123"})
+    response = client.post('/ticket', json={
+        "date": "123123123", 
+    }, headers={
+        "authorization": "bearer "+auth_details['access_token']
+    })
+
+    assert response.status_code == 400
+    assert b"Bad Request" in response.data
+
+    tickets = Ticket.query.filter_by(user_id=auth_details['user_details']['id']).all()
+    assert len(tickets)==0
+    
+
 
     
