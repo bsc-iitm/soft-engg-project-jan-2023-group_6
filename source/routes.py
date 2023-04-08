@@ -34,6 +34,9 @@ def login():
 @appc.route('/ticket', methods=['POST'])
 @token_required
 def create_ticket(current_user):
+    if(current_user.admin == 1):
+        return "Forbidden",403
+    
     ticket_data = json.loads(request.data)
     new_ticket = Ticket(
         title=ticket_data['title'],

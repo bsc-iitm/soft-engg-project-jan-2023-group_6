@@ -34,7 +34,25 @@ def test_create_ticket_without_auth(client):
         "title": "test test1", 
         "content": "test_create_ticket_without_auth"
     })
-
+    tickets = Ticket.query.all()
     assert response.status_code == 401
+    assert b"Unauthorized request" in response.data
+    assert(len(tickets)) == 0
+
+def test_create_ticket_admin(client):
+    access_token = authenticate_user({"username": "admin", "password": "admin123"})["access_token"]
+    response = client.post('/ticket', json={
+        "date": "123123123", 
+        "title": "test test1", 
+        "content": "test_create_ticket_without_auth"
+    }, headers={
+        "authorization": "bearer "+access_token
+    })
+
+    tickets = Ticket.query.all()
+    assert response.status_code == 403
+    assert b"Forbidden" in response.data
+    assert(len(tickets)) == 0
+
 
     
