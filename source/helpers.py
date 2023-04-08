@@ -51,16 +51,19 @@ def authenticate_user(auth_details: dict) -> dict:
 def token_required(func):
     @wraps(func)
     def verify_token(*args, **kwargs):
-        token = request.headers['Authorization'].split()[1]
         try:
-            token_data = jwt.decode(token, SECRET_KEY, ALGORITHM)
-            username = token_data['username']
-        except ExpiredSignatureError:
-            return make_response(jsonify("Session expired, please login again.", 440))
-        except JWTError:
-            return make_response(jsonify("Invalid credentials"), 401)
-        current_user = User.query.filter_by(username=username).first()
-        if current_user is None:
-            return make_response(jsonify('User not found', 404))
-        return func(current_user, *args, **kwargs)
+            token = request.headers['Authorization'].split()[1]
+            try:
+                token_data = jwt.decode(token, SECRET_KEY, ALGORITHM)
+                username = token_data['username']
+            except ExpiredSignatureError:
+                return make_response(jsonify("Session expired, please login again.", 440))
+            except JWTError:
+                return make_response(jsonify("Invalid credentials"), 401)
+            current_user = User.query.filter_by(username=username).first()
+            if current_user is None:
+                return make_response(jsonify('Unauthorized request'), 401)
+            return func(current_user, *args, **kwargs)
+        except:
+            return make_response(jsonify('Unauthorized request'), 401)
     return verify_token
