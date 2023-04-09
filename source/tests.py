@@ -54,7 +54,7 @@ def test_create_ticket_admin(client):
     assert b"Forbidden" in response.data
     assert(len(tickets)) == 0
 
-def test_create_ticket_student(client):
+def test_create_ticket_student_with_completejson(client):
     assert len(Ticket.query.all()) == 0
     auth_details = authenticate_user({"username": "pankaj", "password": "pankaj123"})
     response = client.post('/ticket', json={
