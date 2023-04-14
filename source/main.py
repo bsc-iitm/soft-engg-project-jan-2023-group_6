@@ -1,5 +1,5 @@
-
-from flask import Flask, request
+from flask import Flask
+from flask_cors import CORS
 
 from config import SECRET_KEY, SQLALCHEMY_DATABASE_URI
 from database import db
@@ -8,6 +8,7 @@ from routes import appc
 
 
 app = Flask(__name__)
+CORS(app)
 app.config.update(
     SECRET_KEY=SECRET_KEY,
     SQLALCHEMY_DATABASE_URI=SQLALCHEMY_DATABASE_URI
