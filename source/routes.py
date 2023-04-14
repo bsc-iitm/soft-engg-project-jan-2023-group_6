@@ -61,3 +61,21 @@ def all_faqs():
     return {
         'faqs': faqs
     }
+
+@appc.route('/faq', methods=['POST'])
+@token_required
+def create_faq(current_user):
+    try:
+        if(current_user.admin == 0):
+            return "Forbidden", 403
+        
+        faq_data = json.loads(request.data)
+        new_faq = Faq(
+            title=faq_data['title'],
+            content=faq_data['content']
+        )
+        db.session.add(new_faq)
+        db.session.commit()
+        return {'success': True}
+    except:
+        return 'Bad Request', 400
