@@ -27,7 +27,7 @@ def register():
 
 @appc.route('/login', methods=['POST'])
 def login():
-    auth_details = dict(request.authorization)
+    auth_details = json.loads(request.data)
     auth_data = authenticate_user(auth_details)
     return auth_data
  
