@@ -9,13 +9,15 @@ export default (ctx, inject) => {
     },
   })
 
-  api.interceptors.request.use(function (config) {
-    config.headers.Authorization = `Bearer ${
-      ctx.$cookies.get('user').userToken
-    }`
+  if (ctx.$cookies.get('user')) {
+    api.interceptors.request.use(function (config) {
+      config.headers.Authorization = `Bearer ${
+        ctx.$cookies.get('user').userToken
+      }`
 
-    return config
-  })
+      return config
+    })
+  }
 
   inject('repositories', createRepository(api))
 }
