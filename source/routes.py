@@ -30,7 +30,24 @@ def login():
     auth_details = json.loads(request.data)
     auth_data = authenticate_user(auth_details)
     return auth_data
- 
+
+
+# Student home page route
+@appc.route('/student_home', methods=['POST'])
+# @token_required
+def user_home(): 
+    user_id = json.loads(request.data)['user_id']
+    user_tickets = Ticket.query.filter_by(id=user_id).all()
+    ticket_list = {}
+    for ticket_ in user_tickets:
+        ticket_list[ticket_.id]={
+        'title':ticket_.title,
+        'content':ticket_.content,
+        'date':ticket_.date,
+        'likes':ticket_.likes}
+    return json.dumps(ticket_list, sort_keys=True, default=str)
+
+
 @appc.route('/ticket', methods=['POST'])
 @token_required
 def create_ticket(current_user):
