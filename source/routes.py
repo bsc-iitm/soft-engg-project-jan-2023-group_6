@@ -33,19 +33,48 @@ def login():
 
 
 # Student home page route
-@appc.route('/student_home', methods=['POST'])
-# @token_required
-def user_home(): 
-    user_id = json.loads(request.data)['user_id']
-    user_tickets = Ticket.query.filter_by(id=user_id).all()
-    ticket_list = {}
-    for ticket_ in user_tickets:
-        ticket_list[ticket_.id]={
-        'title':ticket_.title,
-        'content':ticket_.content,
-        'date':ticket_.date,
-        'likes':ticket_.likes}
-    return json.dumps(ticket_list, sort_keys=True, default=str)
+@appc.route('/user/tickets', methods=['GET'])
+@token_required
+def user_home(current_user): 
+    try:
+        if(current_user.admin == 1):
+            return "Forbidden",403
+        else:
+            # user_id = json.loads(request.data)['user_id']
+            user_tickets = Ticket.query.filter_by(id=current_user.id).all()
+            ticket_list = {}
+            for ticket_ in user_tickets:
+                ticket_list[ticket_.id]={
+                'title':ticket_.title,
+                'content':ticket_.content,
+                'date':ticket_.date,
+                'likes':ticket_.likes}
+            return json.dumps(ticket_list, sort_keys=True, default=str)
+    except:
+        return 'Bad Request',400
+    
+#mark as solve
+@appc.route('/ticket/mark_solved', methods=['POST'])
+@token_required
+def mark_solved(current_user): 
+    try:
+        if(current_user.admin == 1): #to change to 0
+            return "Forbidden",403
+        else:
+            ticket_id = json.loads(request.data)['ticket_id']
+            try:
+                Ticket.query.filter_by(id=ticket_id ).update(dict(status = 'Solved'))
+                db.session.commit()
+            except:
+                db.session.rollback()
+            return 'sucessfully marked as solve', 201
+    except:
+        return 'Bad Request',400
+
+#markDuplicate
+
+#likes as arrat
+#replies
 
 
 @appc.route('/ticket', methods=['POST'])
@@ -78,6 +107,8 @@ def all_faqs():
     return {
         'faqs': faqs
     }
+#remaning rud
+
 
 @appc.route('/faq', methods=['POST'])
 @token_required
