@@ -3,6 +3,7 @@ from models import User, Faq, Ticket
 from database import db
 from flask import  request, Blueprint
 from helpers import generate_password_hash, authenticate_user, token_required
+from json import dumps, loads
 
 appc = Blueprint("appc", __name__)
 
@@ -58,7 +59,7 @@ def user_home(current_user):
 @token_required
 def mark_solved(current_user): 
     try:
-        if(current_user.admin == 1): #to change to 0
+        if(current_user.admin == 1): 
             return "Forbidden",403
         else:
             ticket_id = json.loads(request.data)['ticket_id']
@@ -67,14 +68,89 @@ def mark_solved(current_user):
                 db.session.commit()
             except:
                 db.session.rollback()
-            return 'sucessfully marked as solve', 201
+            return 'sucessfully marked as solved', 201
     except:
         return 'Bad Request',400
 
-#markDuplicate
+# Ticket status reopen
 
-#likes as arrat
+#markDuplicate
+@appc.route('/ticket/mark_duplicate', methods=['POST'])
+@token_required
+def mark_duplicate(current_user): 
+    try:
+        if(current_user.admin == 0): 
+            return "Forbidden",403
+        else:
+            data = json.loads(request.data)
+            ticket_id = data['ticket_id']
+            duplicate_id = data['duplicate_id']
+            try:
+                Ticket.query.filter_by(id=ticket_id ).update(dict(duplicate = duplicate_id))
+                db.session.commit()
+            except:
+                db.session.rollback()
+                return 'Bad Request', 401
+            return 'sucessfully marked as solved', 201
+    except:
+        return 'Bad Request',400
+
+# unduplicate route
+
+#like ticket route
+@appc.route('/ticket/like', methods=['POST'])
+@token_required
+def like_ticket(current_user): 
+    try:
+        if(current_user.admin == 1): 
+            return "Forbidden",403
+        else:
+            data = json.loads(request.data)
+            ticket_id = data['ticket_id']
+            user_id = data['user_id']
+            try:
+                likes = loads(db.session.query(Ticket).filter(Ticket.id==ticket_id ).first().likes)
+                if user_id not in likes:
+                    likes.append(user_id)
+                    Ticket.query.filter_by(id=ticket_id ).update(dict(likes = dumps(likes)))
+                    db.session.commit()
+                    return {'sucessfully added like': 201}
+                else:
+                    return {'user already liked': 402}
+            except:
+                db.session.rollback()
+                return 'error occurred while adding', 401
+            
+    except Exception as e:
+        print(e)
+        return 'Bad Request',400
+
+# Unlike route
+
 #replies
+@appc.route('/ticket/reply', methods=['POST'])
+@token_required
+def reply_to_ticket(current_user): 
+    try:
+        if(current_user.admin == 1): 
+            return "Forbidden",403
+        else:
+            data = json.loads(request.data)
+            ticket_id = data['ticket_id']
+            user_id = data['user_id']
+            content = data['content']
+            try:
+                replies = loads(db.session.query(Ticket).filter(Ticket.id==ticket_id ).first().replies)
+                replies.append((user_id, content))
+                Ticket.query.filter_by(id=ticket_id ).update(dict(replies = dumps(replies)))
+                db.session.commit()
+            except:
+                db.session.rollback()
+                return 'error occurred while additin', 401
+            return {'sucessfully added reply': 201}
+    except Exception as e:
+        print(e)
+        return 'Bad Request',400
 
 
 @appc.route('/ticket', methods=['POST'])

@@ -24,8 +24,9 @@ class Ticket(db.Model):
     date = db.Column(db.String(), nullable=False, unique=False)
     status = db.Column(db.String(), nullable=False, unique=False)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False, unique=False)
-    likes = db.Column(db.Integer(), nullable=False, unique=False, default=0)
-    
+    likes = db.Column(db.String(), nullable=False, unique=False, default='[]')
+    duplicate = db.Column(db.Integer(), nullable=True, unique=False)
+    replies = db.Column(db.String(), nullable=False, default='[]')
     # comments
 
     @property
