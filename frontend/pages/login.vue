@@ -27,6 +27,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
+import { mapActions } from 'vuex'
 
 export default {
   mixins: [validationMixin],
@@ -60,6 +61,7 @@ export default {
   },
 
   methods: {
+    ...mapActions({ addUser: 'user/addUser' }),
     submit() {
       this.$v.$touch()
       if (!this.usernameErros.length && !this.passwordErrors.length) {
@@ -71,7 +73,26 @@ export default {
         username: this.username,
         password: this.password,
       })
-      console.log(data)
+      if (
+        data &&
+        data.access_token &&
+        data.user_details &&
+        data.user_details.id
+      ) {
+        this.$cookies.set(
+          'user',
+          { token: data.access_token },
+          {
+            maxAge: 25 * 24 * 60 * 60,
+            path: '/',
+            domain: null,
+          }
+        )
+        this.addUser(data.user_details)
+        this.$router.push({
+          path: '/',
+        })
+      }
     },
   },
 }
