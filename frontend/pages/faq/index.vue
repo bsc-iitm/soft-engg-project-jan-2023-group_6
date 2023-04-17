@@ -12,13 +12,21 @@ export default {
   layout: 'empty',
   fetchOnServer: 'false',
 
-  data: () => ({
-    faqs: null
-  }),
+  data() {
+    return {
+      faqs: null
+    }
+  },
 
-  async fetch() {
-    const temp = await this.$repositories.faqs.get_faqs()
-    this.faqs = temp.data.faqs
+  created() {
+    this.fetch_faqs()
+  },
+
+  methods: {
+    async fetch_faqs() {
+      const temp = await this.$repositories.faqs.get_faqs()
+      this.faqs = temp.data.faqs
+    }
   }
 
 
