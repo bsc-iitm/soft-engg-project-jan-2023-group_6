@@ -1,7 +1,9 @@
 import AuthRepository from '~/repositories/authRepository'
+import TicketRepository from '~/repositories/ticketRepository'
 import FaqRepository from '~/repositories/faqRepository'
 
 export default ($axios) => ({
   auth: AuthRepository($axios),
-  faqs: FaqRepository($axios),
+  ticket: TicketRepository($axios),
+  faq: FaqRepository($axios),
 })
