@@ -85,7 +85,7 @@ export default {
       ) {
         this.$cookies.set(
           'user',
-          { token: data.access_token },
+          { token: data.access_token, ...data.user_details },
           {
             maxAge: 25 * 24 * 60 * 60,
             path: '/',

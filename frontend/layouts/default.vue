@@ -9,20 +9,22 @@
       <v-tabs v-model="tab" align-with-title class="d-none d-sm-flex">
         <v-tabs-slider color="blue"></v-tabs-slider>
 
-        <v-tab v-for="item in items" :key="item">
-          {{ item }}
+        <v-tab v-for="item in pages" :key="item.title">
+          <span @click="$router.push(item.route)">
+            {{ item.title }}
+          </span>
         </v-tab>
       </v-tabs>
-      <v-btn color="blue" style="color: white">Logout</v-btn>
+      <v-btn color="blue" style="color: white" @click="logout">Logout</v-btn>
       <v-spacer></v-spacer>
     </v-app-bar>
     <!-- Add a navigation bar -->
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav dense>
         <v-list-item-group>
-          <v-list-item v-for="(item, index) in items" :key="item">
-            <v-list-item-title @click="tab = index">{{
-              item
+          <v-list-item v-for="item in pages" :key="item.title">
+            <v-list-item-title @click="$router.push(item.route)">{{
+              item.title
             }}</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
@@ -34,21 +36,35 @@
       </v-container>
     </v-main>
 
-    <v-footer :absolute="!fixed" app>
+    <v-footer app>
       <span>Utopian Pind &copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'DefaultLayout',
   data() {
     return {
       drawer: false,
       tab: null,
-      items: ['web', 'shopping', 'videos', 'images', 'news'],
+      pages: [
+        { title: 'Home', route: '/' },
+        { title: 'Posts', route: '/posts' },
+        { title: 'FAQs', route: '/faq' },
+      ],
     }
+  },
+  methods: {
+    ...mapActions({ clearUser: 'user/clearUser' }),
+    logout() {
+      this.clearUser()
+      this.$cookies.remove('user', { path: null, domain: null })
+      this.$cookies.remove('user', { path: null, domain: '.' })
+      this.$router.push('/login')
+    },
   },
 }
 </script>

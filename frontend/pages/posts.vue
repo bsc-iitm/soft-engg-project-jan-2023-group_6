@@ -49,7 +49,7 @@
 
 <script>
 export default {
-  name: 'IndexPage',
+  name: 'PostsPage',
   middleware: 'authenticated',
   data() {
     return {
