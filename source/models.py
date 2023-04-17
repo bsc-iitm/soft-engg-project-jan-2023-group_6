@@ -51,6 +51,7 @@ class Faq(db.Model):
     @property
     def serialized(self):
         return {
+            'id': self.id,
             'title': self.title,
             'content': self.content
         }
