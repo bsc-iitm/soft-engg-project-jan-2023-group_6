@@ -96,3 +96,17 @@ def update_faq(current_user):
         return {'success': True}
     except:
         return 'Bad Request', 400
+    
+@appc.route('/faq', methods=['DELETE'])
+@token_required
+def delete_faq(current_user):
+    try:
+        if(current_user.admin == 0):
+            return "Forbidden", 403
+        faq_data = json.loads(request.data)
+        faq_to_delete = Faq.query.filter_by(id = faq_data['id']).first()
+        db.session.delete(faq_to_delete)
+        db.session.commit()
+        return {'success': True}
+    except:
+        return 'Bad Request', 400
