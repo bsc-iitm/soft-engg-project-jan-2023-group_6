@@ -33,24 +33,47 @@ def login():
     return auth_data
 
 
-# Student home page route
+# home page route
 @appc.route('/user/tickets', methods=['GET'])
 @token_required
-def user_home(current_user): 
+def public_tickets(current_user): 
     try:
         if(current_user.admin == 1):
-            return "Forbidden",403
+            _tickets = Ticket.query.filter_by(status='Open').all()
         else:
-            # user_id = json.loads(request.data)['user_id']
-            user_tickets = Ticket.query.filter_by(id=current_user.id).all()
-            ticket_list = {}
-            for ticket_ in user_tickets:
-                ticket_list[ticket_.id]={
-                'title':ticket_.title,
-                'content':ticket_.content,
-                'date':ticket_.date,
-                'likes':ticket_.likes}
-            return json.dumps(ticket_list, sort_keys=True, default=str)
+            _tickets = Ticket.query.filter_by(id=current_user.id).all()
+            
+        ticket_list = {}
+        for ticket_ in _tickets:
+            ticket_list[ticket_.id]={
+            'id': ticket_.id,
+            'title':ticket_.title,
+            'content':ticket_.content,
+            'date':ticket_.date,
+            'likes':ticket_.likes,
+            'status': ticket_.status
+            }
+        return json.dumps(ticket_list, sort_keys=True, default=str)
+    except:
+        return 'Bad Request',400
+
+# get all public tickets (need to add private/public flag to tickets)
+@appc.route('/user/publictickets', methods=['GET'])
+@token_required
+def user_home(): 
+    try:
+        user_tickets = Ticket.query.filter_by.all()
+        ticket_list = {}
+        for ticket_ in user_tickets:
+            ticket_list[ticket_.id]={
+            'id': ticket_.id,
+            'title':ticket_.title,
+            'content':ticket_.content,
+            'date':ticket_.date,
+            'likes':ticket_.likes,
+            'status': ticket_.status
+            }
+        return json.dumps(ticket_list, sort_keys=True, default=str)
     except:
         return 'Bad Request',400
     
