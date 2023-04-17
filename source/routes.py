@@ -79,3 +79,20 @@ def create_faq(current_user):
         return {'success': True}
     except:
         return 'Bad Request', 400
+    
+@appc.route('/faq', methods=['PUT'])
+@token_required
+def update_faq(current_user):
+    try:
+        if(current_user.admin == 0):
+            return "Forbidden", 403
+        faq_data = json.loads(request.data)
+        faq = Faq.query.filter_by(id = faq_data['id']).first()
+        if faq_data['title']:
+            faq.title = faq_data['title']
+        if faq_data['content']:
+            faq.content = faq_data['content']
+        db.session.commit()
+        return {'success': True}
+    except:
+        return 'Bad Request', 400
