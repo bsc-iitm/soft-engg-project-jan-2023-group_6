@@ -1,6 +1,7 @@
 export const state = () => ({
   loggedIn: false,
   userInfo: {},
+  currentTab: 'Home',
 })
 
 export const actions = {
@@ -26,6 +27,9 @@ export const actions = {
     commit('UPDATE_LOGGEDIN', false)
     commit('UPDATE_USERINFO', {})
   },
+  switchTab({ commit }, payload) {
+    commit('UPDATE_TAB', payload)
+  },
 }
 
 export const mutations = {
@@ -35,6 +39,9 @@ export const mutations = {
   UPDATE_USERINFO(state, payload) {
     state.userInfo = payload
   },
+  UPDATE_TAB(state, payload) {
+    state.currentTab = payload
+  },
 }
 
 export const getters = {
@@ -43,5 +50,8 @@ export const getters = {
   },
   userInfo: (state) => {
     return state.userInfo
+  },
+  currentTab: (state) => {
+    return state.currentTab
   },
 }

@@ -10,7 +10,7 @@
         <v-tabs-slider color="blue"></v-tabs-slider>
 
         <v-tab v-for="item in pages" :key="item.title">
-          <span @click="$router.push(item.route)">
+          <span @click="switchTab(item.title)">
             {{ item.title }}
           </span>
         </v-tab>
@@ -23,7 +23,7 @@
       <v-list nav dense>
         <v-list-item-group>
           <v-list-item v-for="item in pages" :key="item.title">
-            <v-list-item-title @click="$router.push(item.route)">{{
+            <v-list-item-title @click="switchTab(item.title)">{{
               item.title
             }}</v-list-item-title>
           </v-list-item>
@@ -58,7 +58,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions({ clearUser: 'user/clearUser' }),
+    ...mapActions({ clearUser: 'user/clearUser', switchTab: 'user/switchTab' }),
     logout() {
       this.clearUser()
       this.$cookies.remove('user', { path: null, domain: null })

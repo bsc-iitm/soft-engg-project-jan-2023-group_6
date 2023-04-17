@@ -36,13 +36,14 @@ def login():
 # home page route
 @appc.route('/user/tickets', methods=['GET'])
 @token_required
-def public_tickets(current_user): 
+def user_home(current_user): 
     try:
         if(current_user.admin == 1):
             _tickets = Ticket.query.filter_by(status='Open').all()
         else:
-            _tickets = Ticket.query.filter_by(id=current_user.id).all()
-            
+            _tickets = Ticket.query.filter_by(user_id=current_user.id).all()
+        
+        print(_tickets)
         ticket_list = {}
         for ticket_ in _tickets:
             ticket_list[ticket_.id]={
@@ -60,7 +61,7 @@ def public_tickets(current_user):
 # get all public tickets (need to add private/public flag to tickets)
 @appc.route('/user/publictickets', methods=['GET'])
 @token_required
-def user_home(): 
+def public_tickets(): 
     try:
         user_tickets = Ticket.query.filter_by.all()
         ticket_list = {}
@@ -190,8 +191,8 @@ def create_ticket(current_user):
             date=ticket_data['date'],
             status='Open',
             user_id=current_user.id,
-            likes=0
         )
+        print(new_ticket)
         db.session.add(new_ticket)
         db.session.commit()
         return {'success': True}
