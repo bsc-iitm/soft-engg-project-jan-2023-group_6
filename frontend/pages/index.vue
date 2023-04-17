@@ -1,82 +1,54 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <v-card class="logo py-4 d-flex justify-center">
-        <NuxtLogo />
-        <VuetifyLogo />
+  <v-row justify="center" align="center" style="gap: 30px; margin-bottom: 14px">
+    <v-card
+      outlined
+      style="width: 100%; padding: 20px"
+      v-for="ticket in tickets"
+      :key="ticket.id"
+    >
+      <div style="display: flex; gap: 40px">
+        <span>Ticket #{{ ticket.id }}</span>
+        <span style="margin-left: 40px" v-if="ticket.tags"
+          >Tags: {{ ticket.tags.join(', ') }}</span
+        >
+      </div>
+      <v-card
+        outlined
+        style="
+          width: 100%;
+          padding: 4px;
+          margin: 20px 0 30px 0;
+          min-height: 130px;
+          max-height: 130px;
+          overflow: hidden;
+        "
+      >
+        <v-card-title>{{ ticket.title }}</v-card-title>
+        <v-card-subtitle>{{ ticket.content }}</v-card-subtitle>
       </v-card>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation </a
-            >.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord </a
-            >.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board </a
-            >.
-          </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3" />
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
+
+      <div
+        style="
+          display: flex;
+          gap: 40px;
+          align-items: center;
+          justify-content: space-between;
+        "
+      >
+        <span
+          >Status:
+          <span
+            :style="{
+              color: ticket.status == 'Open' ? 'red' : 'green',
+              fontWeight: 700,
+            }"
           >
-            Nuxt Documentation
-          </a>
-          <br />
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
+            {{ ticket.status }}
+          </span></span
+        >
+        <v-btn color="blue" style="color: white">View Details</v-btn>
+      </div>
+    </v-card>
   </v-row>
 </template>
 
@@ -84,5 +56,77 @@
 export default {
   name: 'IndexPage',
   middleware: 'authenticated',
+
+  data() {
+    return {
+      tickets: [
+        {
+          id: 234,
+          tags: ['Course', 'Misc'],
+          title: 'New course',
+          content:
+            'ADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJL ADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJL',
+          status: 'Resolved',
+        },
+        {
+          id: 234,
+          tags: ['Course', 'Misc'],
+          title: 'New course',
+          content:
+            'ADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJL ADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJL',
+          status: 'Resolved',
+        },
+        {
+          id: 234,
+          tags: ['Course', 'Misc'],
+          title: 'New course',
+          content:
+            'ADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJL ADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJL',
+          status: 'Resolved',
+        },
+        {
+          id: 234,
+          tags: ['Course', 'Misc'],
+          title: 'New course',
+          content:
+            'ADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJL ADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJL',
+          status: 'Resolved',
+        },
+        {
+          id: 234,
+          tags: ['Course', 'Misc'],
+          title: 'New course',
+          content:
+            'ADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJL ADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJL',
+          status: 'Resolved',
+        },
+        {
+          id: 234,
+          tags: ['Course', 'Misc'],
+          title: 'New course',
+          content:
+            'ADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJL ADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJL',
+          status: 'Resolved',
+        },
+      ],
+      ticket: {
+        id: 234,
+        tags: ['Course', 'Misc'],
+        title: 'New course',
+        content:
+          'ADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJL ADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJLADKJ KJFLKJS KLJFLSDKJF LKSJFL KSJFLKJ SLKFJLKSD JFKLSDJFLKSDFJL',
+        status: 'Resolved',
+      },
+    }
+  },
+  created() {
+    this.getTickets()
+  },
+  methods: {
+    getTickets() {
+      const { data } = this.$repositories.ticket.getTickets()
+      console.log(data)
+    },
+  },
 }
 </script>
