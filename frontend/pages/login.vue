@@ -1,27 +1,31 @@
 <template>
-  <v-container>
-    <v-row justify="center" align="center">
-      <form>
-        <v-text-field
-          v-model="username"
-          :error-messages="usernameErros"
-          label="username"
-          required
-          @input="$v.username.$touch()"
-          @blur="$v.username.$touch()"
-        ></v-text-field>
-        <v-text-field
-          v-model="password"
-          :error-messages="passwordErrors"
-          label="password"
-          required
-          @input="$v.password.$touch()"
-          @blur="$v.password.$touch()"
-        ></v-text-field>
-        <v-btn class="mr-4" @click="submit"> login </v-btn>
-      </form>
-    </v-row>
-  </v-container>
+  <v-row align="center" justify="center" width="100%">
+    <form class="form-align">
+      <v-text-field
+        v-model="username"
+        :error-messages="usernameErros"
+        label="username"
+        style="width: 100%"
+        required
+        @input="$v.username.$touch()"
+        @blur="$v.username.$touch()"
+        outlined
+      ></v-text-field>
+      <v-text-field
+        style="margin-bottom: 20px; width: 100%"
+        v-model="password"
+        :error-messages="passwordErrors"
+        label="password"
+        required
+        @input="$v.password.$touch()"
+        @blur="$v.password.$touch()"
+        outlined
+      ></v-text-field>
+      <v-btn class="mr-4" style="min-width: 110px" @click="submit">
+        login
+      </v-btn>
+    </form>
+  </v-row>
 </template>
 
 <script>
@@ -97,3 +101,15 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.form-align {
+  width: 100%;
+  max-width: 400px;
+  margin-top: 20%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+</style>
