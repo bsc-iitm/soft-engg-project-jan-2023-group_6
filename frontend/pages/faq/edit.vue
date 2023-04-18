@@ -17,6 +17,7 @@
         >
         </v-textarea>
         <v-btn @click="updateFaq">Update</v-btn>
+        <v-btn @click="deleteFaq">Delete</v-btn>
       </form>
     
       <v-row v-else>
@@ -30,7 +31,6 @@
         </v-col>
         <v-col cols="1">
           <v-btn @click="faqUnderEdit = faq">Edit</v-btn>
-          <v-btn>Delete</v-btn>
         </v-col>
       </v-row>
     </div>
@@ -57,13 +57,18 @@ export default {
       const temp = await this.$repositories.faqs.get_faqs()
       this.faqs = temp.data.faqs
     },
-    
     async updateFaq() {
       await this.$repositories.faqs.update_faq({
         id: this.faqUnderEdit.id,
         title: this.faqUnderEdit.title,
         content: this.faqUnderEdit.content
       })
+      this.$router.push({
+        path: '/faq',
+      })
+    },
+    async deleteFaq() {
+      await this.$repositories.faqs.delete_faq(this.faqUnderEdit.id)
       this.$router.push({
         path: '/faq',
       })
