@@ -4,5 +4,8 @@ export default ($axios) => ({
   },
   update_faq(params) {
     return $axios.put('/faq', params)
+  },
+  create_faq(params) {
+    return $axios.post('/faq', params)
   }
 })
