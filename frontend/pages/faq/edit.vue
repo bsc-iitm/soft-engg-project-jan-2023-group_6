@@ -1,11 +1,21 @@
 <template>
-  <v-container>
+  <div>
     <div v-for="faq in faqs" :key="faq.id">
-      <form v-if="faqUnderEdit && faqUnderEdit.id == faq.id">
-        <v-text-field v-model="faqUnderEdit.title">
+      <form v-if="faqUnderEdit && faqUnderEdit.id == faq.id" class="my-4">
+        <v-text-field
+          v-model="faqUnderEdit.title"
+          label="title"
+          required
+          outlined
+        >
         </v-text-field>
-        <v-text-field v-model="faqUnderEdit.content">
-        </v-text-field>
+        <v-textarea
+          v-model="faqUnderEdit.content"
+          label="content"
+          required
+          outlined
+        >
+        </v-textarea>
         <v-btn @click="updateFaq">Update</v-btn>
       </form>
     
@@ -24,31 +34,39 @@
         </v-col>
       </v-row>
     </div>
-  </v-container>
+  </div>
 </template>
 
 <script>
 export default {
   layout: 'empty',
-  fetchOnServer: 'false',
 
-  data: () => ({
-    faqs: null,
-    faqUnderEdit: null
-  }),
+  data() {
+    return {
+      faqs: null,
+      faqUnderEdit: null
+    }
+  },
 
-  async fetch() {
-    const temp = await this.$repositories.faqs.get_faqs()
-    this.faqs = temp.data.faqs
+  created() {
+    this.fetch_faqs()
   },
 
   methods: {
+    async fetch_faqs() {
+      const temp = await this.$repositories.faqs.get_faqs()
+      this.faqs = temp.data.faqs
+    },
+    
     async updateFaq() {
       await this.$repositories.faqs.update_faq({
+        id: this.faqUnderEdit.id,
         title: this.faqUnderEdit.title,
         content: this.faqUnderEdit.content
       })
-      document.location.reload()
+      this.$router.push({
+        path: '/faq',
+      })
     }
   }
 }
