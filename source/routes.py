@@ -207,10 +207,9 @@ def all_faqs():
     return {
         'faqs': faqs
     }
-#remaning rud
 
 
-@appc.route('/faq', methods=['POST'])
+@appc.route('/faq/create', methods=['POST'])
 @token_required
 def create_faq(current_user):
     try:
@@ -228,7 +227,7 @@ def create_faq(current_user):
     except:
         return 'Bad Request', 400
     
-@appc.route('/faq', methods=['PUT'])
+@appc.route('/faq/update', methods=['PUT'])
 @token_required
 def update_faq(current_user):
     try:
@@ -245,16 +244,17 @@ def update_faq(current_user):
     except:
         return 'Bad Request', 400
     
-@appc.route('/faq', methods=['DELETE'])
+@appc.route('/faq/delete/<faq_id>', methods=['DELETE'])
 @token_required
-def delete_faq(current_user):
+def delete_faq(current_user, faq_id):
     try:
         if(current_user.admin == 0):
             return "Forbidden", 403
-        faq_data = json.loads(request.data)
-        faq_to_delete = Faq.query.filter_by(id = faq_data['id']).first()
+        print(faq_id)
+        faq_to_delete = Faq.query.filter_by(id = faq_id).first()
         db.session.delete(faq_to_delete)
         db.session.commit()
         return {'success': True}
-    except:
+    except Exception as err:
+        print(err)
         return 'Bad Request', 400
