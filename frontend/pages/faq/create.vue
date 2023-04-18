@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-center">
+    <h1 class="text-center my-4">
       Create Faq
     </h1>
     <form class="mt-4">

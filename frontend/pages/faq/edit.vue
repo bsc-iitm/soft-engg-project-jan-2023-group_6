@@ -1,5 +1,8 @@
 <template>
   <div>
+    <h1 class="text-center my-4">
+      Edit FAQs
+    </h1>
     <div v-for="faq in faqs" :key="faq.id">
       <form v-if="faqUnderEdit && faqUnderEdit.id == faq.id" class="my-4">
         <v-text-field

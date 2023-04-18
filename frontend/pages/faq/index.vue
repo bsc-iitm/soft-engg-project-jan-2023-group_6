@@ -1,10 +1,15 @@
 <template>
-  <v-expansion-panels>
-    <v-expansion-panel v-for="faq in faqs" :key="faq.id">
-      <v-expansion-panel-header>{{ faq.title }}</v-expansion-panel-header>
-      <v-expansion-panel-content>{{ faq.content }}</v-expansion-panel-content>
-    </v-expansion-panel>
-  </v-expansion-panels>
+  <div>
+    <h1 class="text-center my-4">
+      Frequently Asked Questions
+    </h1>
+    <v-expansion-panels>
+      <v-expansion-panel v-for="faq in faqs" :key="faq.id" class="my-2">
+        <v-expansion-panel-header>{{ faq.title }}</v-expansion-panel-header>
+        <v-expansion-panel-content>{{ faq.content }}</v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+  </div>
 </template>
 
 <script>
