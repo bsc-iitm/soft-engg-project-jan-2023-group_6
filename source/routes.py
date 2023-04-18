@@ -226,7 +226,8 @@ def create_faq(current_user):
         return {'success': True}
     except:
         return 'Bad Request', 400
-    
+
+
 @appc.route('/faq/update', methods=['PUT'])
 @token_required
 def update_faq(current_user):
@@ -243,7 +244,8 @@ def update_faq(current_user):
         return {'success': True}
     except:
         return 'Bad Request', 400
-    
+
+   
 @appc.route('/faq/delete/<faq_id>', methods=['DELETE'])
 @token_required
 def delete_faq(current_user, faq_id):
