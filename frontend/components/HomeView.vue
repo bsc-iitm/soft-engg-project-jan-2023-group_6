@@ -1,5 +1,8 @@
  <template>
-  <div style="width: 100%; display: flex; flex-direction: column; gap: 30px">
+  <div
+    v-if="!this.selectedTicket"
+    style="width: 100%; display: flex; flex-direction: column; gap: 30px"
+  >
     <div
       style="
         display: flex;
@@ -64,15 +67,23 @@
             {{ ticket.status }}
           </span></span
         >
-        <v-btn color="blue" style="color: white">View Details</v-btn>
+        <v-btn
+          color="blue"
+          style="color: white"
+          @click="selectTicket(ticket.id)"
+          >View Details</v-btn
+        >
       </div>
     </v-card>
   </div>
+  <ticket-details :allowReply="true" v-else> </ticket-details>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import TicketDetails from './TicketDetails.vue'
 export default {
+  components: { TicketDetails },
   name: 'IndexPage',
   middleware: 'authenticated',
 
@@ -84,13 +95,17 @@ export default {
   computed: {
     ...mapGetters({
       user: 'user/userInfo',
+      selectedTicket: 'user/selectedTicket',
     }),
   },
   created() {
     this.getTickets()
   },
   methods: {
-    ...mapActions({ switchTab: 'user/switchTab' }),
+    ...mapActions({
+      switchTab: 'user/switchTab',
+      selectTicket: 'user/selectTicket',
+    }),
     async getTickets() {
       const { data } = await this.$repositories.ticket.getTickets()
       this.tickets = Object.values(data)

@@ -1,23 +1,8 @@
  <template>
-  <div style="width: 100%; display: flex; flex-direction: column; gap: 30px">
-    <div
-      style="
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        margin-bottom: -20px;
-      "
-    >
-      <h1>{{ user && user.admin ? 'Open Tickets' : 'Your Tickets' }}</h1>
-      <v-btn
-        v-if="user && !user.admin"
-        color="red"
-        style="color: white"
-        @click="switchTab('CreateTicket')"
-        >Raise ticket</v-btn
-      >
-    </div>
-
+  <div
+    v-if="ticket"
+    style="width: 100%; display: flex; flex-direction: column; gap: 30px"
+  >
     <v-card outlined style="width: 100%; padding: 20px">
       <div style="display: flex; gap: 40px">
         <span>Ticket #{{ ticket.id }}</span>
@@ -62,7 +47,7 @@
         >
       </div>
 
-      <div>
+      <div v-if="allowReply">
         <v-textarea
           v-model="newReply"
           style="margin-bottom: 20px; width: 100%"
@@ -84,23 +69,28 @@ import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 import { mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'IndexPage',
-  middleware: 'authenticated',
+  name: 'TicketDetails',
   mixins: [validationMixin],
-
+  middleware: 'authenticated',
   validations: {
-    content: { required },
+    newReply: { required },
   },
-  props: ['ticketID'],
+  props: {
+    allowReply: {
+      default: false,
+      type: Boolean,
+    },
+  },
   data() {
     return {
-      ticketData: [],
+      ticket: [],
       newReply: null,
     }
   },
   computed: {
     ...mapGetters({
       user: 'user/userInfo',
+      selectedTicket: 'user/selectedTicket',
     }),
     newReplyErrors() {
       const errors = []
@@ -111,13 +101,16 @@ export default {
     },
   },
   created() {
-    this.getTickets()
+    this.getTicket()
   },
   methods: {
     ...mapActions({ switchTab: 'user/switchTab' }),
-    async getTickets() {
-      const { data } = await this.$repositories.ticket.getTickets()
-      this.tickets = Object.values(data)
+    async getTicket() {
+      const { data } = await this.$repositories.ticket.getTicket({
+        ticket_id: this.selectedTicket,
+      })
+      this.ticket = data
+      // this.tickets = Object.values(data)
     },
     submit() {
       this.$v.$touch()
@@ -132,7 +125,7 @@ export default {
         date: Date.now(),
       })
       if (data && data.data && data.data.success && data.status === 200) {
-        this.ticketData.replies.push([this.user.id, this.newReply])
+        this.ticket.replies.push([this.user.id, this.newReply])
       }
     },
   },

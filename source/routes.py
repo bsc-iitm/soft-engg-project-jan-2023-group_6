@@ -4,6 +4,7 @@ from database import db
 from flask import  request, Blueprint
 from helpers import generate_password_hash, authenticate_user, token_required
 from json import dumps, loads
+import ast
 
 appc = Blueprint("appc", __name__)
 
@@ -51,10 +52,27 @@ def user_home(current_user):
             'title':ticket_.title,
             'content':ticket_.content,
             'date':ticket_.date,
-            'likes':ticket_.likes,
+            'likes':  ast.literal_eval(ticket_.likes),
             'status': ticket_.status
             }
         return json.dumps(ticket_list, sort_keys=True, default=str)
+    except:
+        return 'Bad Request',400
+
+@appc.route('/user/ticket', methods=['GET'])
+@token_required
+def get_ticket_by_id(current_user): 
+    try:
+        ticket_id = request.args.get('ticket_id')
+        ticket_ = Ticket.query.filter_by(id=ticket_id).first()
+        print([ticket_])
+        return {'id': ticket_.id,
+            'title':ticket_.title,
+            'content':ticket_.content,
+            'date':ticket_.date,
+            'likes':  ast.literal_eval(ticket_.likes),
+            'status': ticket_.status, 
+            'replies':  ast.literal_eval(ticket_.replies)}, 200
     except:
         return 'Bad Request',400
 
@@ -71,8 +89,8 @@ def public_tickets():
             'title':ticket_.title,
             'content':ticket_.content,
             'date':ticket_.date,
-            'likes':ticket_.likes,
-            'status': ticket_.status
+            'likes':  ast.literal_eval(ticket_.likes),
+            'status': ticket_.status,
             }
         return json.dumps(ticket_list, sort_keys=True, default=str)
     except:
@@ -166,7 +184,7 @@ def like_ticket(current_user):
         else:
             data = json.loads(request.data)
             ticket_id = data['ticket_id']
-            user_id = data['user_id']
+            user_id = current_user.id
             try:
                 likes = loads(db.session.query(Ticket).filter(Ticket.id==ticket_id ).first().likes)
                 if user_id not in likes:
@@ -194,7 +212,7 @@ def unlike_ticket(current_user):
         else:
             data = json.loads(request.data)
             ticket_id = data['ticket_id']
-            user_id = data['user_id']
+            user_id = current_user.id
             try:
                 ticket = db.session.query(Ticket).filter(Ticket.id==ticket_id ).first()
                 if str(ticket.user_id) != user_id:
@@ -219,22 +237,19 @@ def unlike_ticket(current_user):
 @token_required
 def reply_to_ticket(current_user): 
     try:
-        if(current_user.admin == 1): 
-            return "Forbidden",403
-        else:
-            data = json.loads(request.data)
-            ticket_id = data['ticket_id']
-            user_id = data['user_id']
-            content = data['content']
-            try:
-                replies = loads(db.session.query(Ticket).filter(Ticket.id==ticket_id ).first().replies)
-                replies.append((user_id, content))
-                Ticket.query.filter_by(id=ticket_id ).update(dict(replies = dumps(replies)))
-                db.session.commit()
-            except:
-                db.session.rollback()
-                return 'error occurred while additin', 401
-            return {'sucessfully added reply': 201}
+        data = json.loads(request.data)
+        ticket_id = data['ticket_id']
+        user_id = current_user.id
+        content = data['content']
+        try:
+            replies = loads(db.session.query(Ticket).filter(Ticket.id==ticket_id ).first().replies)
+            replies.append((user_id, content))
+            Ticket.query.filter_by(id=ticket_id ).update(dict(replies = dumps(replies)))
+            db.session.commit()
+        except:
+            db.session.rollback()
+            return 'error occurred while additin', 401
+        return {'sucessfully added reply': 201}
     except:
         return 'Bad Request',400
 
@@ -271,7 +286,7 @@ def update_ticket(current_user):
         else:
             ticket_data = json.loads(request.data)
             ticket_id = ticket_data['ticket_id']
-            user_id = ticket_data['user_id']
+            user_id = current_user.id
             try:
                 ticket = db.session.query(Ticket).filter(Ticket.id==ticket_id ).first()
                 if str(ticket.user_id) != user_id:
@@ -298,7 +313,7 @@ def delete_ticket(current_user):
         else:
             ticket_data = json.loads(request.data)
             ticket_id = ticket_data['ticket_id']
-            user_id = ticket_data['user_id']
+            user_id = current_user.id
             try:
                 ticket = db.session.query(Ticket).filter(Ticket.id==ticket_id ).first()
                 if str(ticket.user_id) != user_id:
