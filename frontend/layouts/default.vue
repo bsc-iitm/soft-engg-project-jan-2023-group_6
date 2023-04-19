@@ -52,8 +52,8 @@ export default {
       tab: null,
       pages: [
         { title: 'Home', route: '/' },
-        { title: 'Posts', route: '/posts' },
-        { title: 'FAQs', route: '/faq' },
+        // { title: 'Posts', route: '/posts' },
+        // { title: 'FAQs', route: '/faq' },
       ],
     }
   },

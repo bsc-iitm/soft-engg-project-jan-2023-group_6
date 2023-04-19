@@ -2,6 +2,7 @@ export const state = () => ({
   loggedIn: false,
   userInfo: {},
   currentTab: 'Home',
+  selectedTicket: null,
 })
 
 export const actions = {
@@ -29,6 +30,10 @@ export const actions = {
   },
   switchTab({ commit }, payload) {
     commit('UPDATE_TAB', payload)
+    commit('UPDATE_SELECTEDTICKET', null)
+  },
+  selectTicket({ commit }, payload) {
+    commit('UPDATE_SELECTEDTICKET', payload)
   },
 }
 
@@ -42,6 +47,9 @@ export const mutations = {
   UPDATE_TAB(state, payload) {
     state.currentTab = payload
   },
+  UPDATE_SELECTEDTICKET(state, payload) {
+    state.selectedTicket = payload
+  },
 }
 
 export const getters = {
@@ -53,5 +61,8 @@ export const getters = {
   },
   currentTab: (state) => {
     return state.currentTab
+  },
+  selectedTicket: (state) => {
+    return state.selectedTicket
   },
 }
