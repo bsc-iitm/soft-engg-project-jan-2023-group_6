@@ -1,4 +1,4 @@
-# Instructions for running this API
+# Instructions for running this Application
 
 ## Setup
 
