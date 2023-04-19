@@ -1,0 +1,142 @@
+openapi: 3.0.3
+info:
+  title: PIND 0.1
+  description: PIND doc description
+  version: '0.1'
+servers:
+  - url: http://127.0.0.1:5000
+    variables: {}
+tags:
+  - name: ticket
+    description: everything about tickets
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+paths:
+  /ticket/{ticketId}/markSolved:
+    description: mark tickets as solved
+    post:
+      summary: ''
+      description: create a new ticket for a given user id (student only)
+     security:
+        - bearerAuth: []
+      tags:
+        - faq
+        - student only
+      summary: ''
+      description: create a new faq (staff only)
+      operationId: 'markSolved'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                  example: 4
+      responses:
+        '201':
+          description: sucessfully marked as solved
+          content:
+            application/json:
+              examples:
+                201 result:
+                  value: marked as solved
+        '400':
+          description: sample bad request response
+          content:
+            application/json:
+              examples:
+                400 result:
+                  value: bad request
+        '401':
+          description: sample unauthorized response
+          content:
+            application/json:
+              examples:
+                401 result:
+                  value: you are not authorized to make this request
+        '404':
+          description: ticket not found
+          content:
+            application/json:
+              examples:
+                404 result:
+                  value: ticket not found
+        '500':
+          description: sample internal error response
+          content:
+            application/json:
+              examples:
+                500 result:
+                  value: internal error
+      tags:
+        - ticket
+
+    
+  /ticket/{ticketId}/like:
+    description: like ticket to increase priority
+    post:
+      summary: ''
+      description: add like to ticket
+      parameters:
+      - name: ticketId
+        description: id of ticket
+        required: true
+        in: path
+        schema:
+          type: integer
+          example: 3
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                  example: 4
+      operationId: likeTicket
+      responses:
+        '200':
+          description: ticket liked successfully
+          content:
+            application/json:
+              examples:
+                200 result:
+                  value: ticket liked
+        '400':
+          description: sample bad request response
+          content:
+            application/json:
+              examples:
+                400 result:
+                  value: bad request
+        '401':
+          description: sample unauthorized response
+          content:
+            application/json:
+              examples:
+                401 result:
+                  value: you are not authorized to make this request
+        '404':
+          description: ticket not found
+          content:
+            application/json:
+              examples:
+                404 result:
+                  value: ticket not found
+        '500':
+          description: sample internal error response
+          content:
+            application/json:
+              examples:
+                500 result:
+                  value: internal error
+      tags:
+        - ticket

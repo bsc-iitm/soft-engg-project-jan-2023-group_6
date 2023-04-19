@@ -1,0 +1,74 @@
+[Scene 1 - All 3 students are independent scenes]
+
+Student 1: It has been two weeks and I've reminded 3 times, still no resolution.
+
+Student 2: I don't think this solves my query.
+
+Student 3: I was not able to find if I'm eligible or not on the website, let me
+email them.
+
+Student 4: Portal seems to be down let me email support.
+
+10 students: Portal seems to be down let me email support.
+
+100 students: Portal seems to be down let me email support.
+
+[Scene 2 - Two Support Staff and their manager]
+
+Manager: I'm receiving 20-30 of complaints daily about no response from support or
+incorrect resolutions. The programmes rating has gone down to 3 star and people
+are more hesitant to enroll.
+
+SS1: Sir, you're getting 20-30 complaints and we're getting 200-300 emails daily
+
+SS2: A lot of students also raise similar issue and replying to each individually
+eats up a lot of time
+
+SS1: Not only that, but there's no proper way to organize or categorize queries to
+solve them together or raise them together
+
+SS2: And whenever a student replies to the thread, the priority order gets changed
+
+Manager: Very well. We have decided to try out PIND, let's see if things get
+better.
+
+[Scene 3 - Introduction of PIND - Support System (dialogues have corresponding
+minimal UI)]
+
+SS1: Let me look at all admission related queries first. [filters by Admin]
+
+SS1: The most liked query is about eligibility criteria changes. Let me respond to
+it first.
+
+SS1: Done. Let me also update the FAQs with the new eligibility criteria.
+
+SS2: This, this and this has already been resolved before.
+
+SS2: Let me link the previous solution and notify student [filtered by Portal
+Issues]
+
+[Scene 4 - Student sided fixes pov]
+
+[Ping] Student 1: Yes, this resolves my issue. Let me mark it as resolved.
+
+Student 1: I had some issue with payment, let me add the query.
+
+[Enters title, sees a list of suggested similar queries. Clicks on one]
+
+Student 1: Oh this is the same issue I have. This solution works. Let me upvote it.
+
+Student 2: No, I don't think this is correct, let me ask for more clarification.
+
+[Ping] Student 3: FAQs have been updated. This is what I was looking for.
+
+[Scene 5 - Reviews go up, more positive feedback etc., happier students happier
+staff]
+
+[Happy support staff. Manager walks in] Manager: Good job, you two. The rating of
+the program has gone up to 4.5 stars and I haven't received a complaint in a week.
+
+SS1: Haha, no problem sir, actually our work has got a lot easier with PIND.
+
+SS2: Yes, duplicate queries and general questions have reduced significantly.
+
+SS1: Not only that but overall organisation and communication is a lot faster now.

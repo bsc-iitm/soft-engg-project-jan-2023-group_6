@@ -1,0 +1,610 @@
+_type: export
+__export_format: 4
+__export_date: 2023-03-16T11:06:24.350Z
+__export_source: insomnia.desktop.app:v2023.1.0
+resources:
+  - _id: req_wrk_a3b785a92973416985489c4d7e5957cbd86792e9
+    parentId: fld_wrk_a3b785a92973416985489c4d7e5957cb346d34a0
+    modified: 1678959506302
+    created: 1678959506302
+    url: "{{ base_url }}/ticket"
+    name: /ticket
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "userId": 2,
+          "deets": "I am unable to access course XYZ",
+          "date": 1231231,
+          "categories": [
+            "XYZ",
+            "Operational"
+          ]
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1678959506302
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_wrk_a3b785a92973416985489c4d7e5957cb346d34a0
+    parentId: wrk_a3b785a92973416985489c4d7e5957cb
+    modified: 1678959506308
+    created: 1678959506308
+    name: ticket
+    description: everything about tickets
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1678959506308
+    _type: request_group
+  - _id: wrk_a3b785a92973416985489c4d7e5957cb
+    parentId: null
+    modified: 1678959509022
+    created: 1678959509022
+    name: PIND 0.1 0.1
+    description: PIND doc description
+    scope: design
+    _type: workspace
+  - _id: req_wrk_a3b785a92973416985489c4d7e5957cbaf32d16c
+    parentId: fld_wrk_a3b785a92973416985489c4d7e5957cb346d34a0
+    modified: 1678959506299
+    created: 1678959506299
+    url: "{{ base_url }}/ticket"
+    name: /ticket
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - name: page
+        disabled: true
+        value: "1"
+      - name: size
+        disabled: true
+        value: "2"
+    headers: []
+    authentication: {}
+    metaSortKey: -1678959506299
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_wrk_a3b785a92973416985489c4d7e5957cbd0cd3d2f
+    parentId: fld_wrk_a3b785a92973416985489c4d7e5957cb346d34a0
+    modified: 1678959506297
+    created: 1678959506297
+    url: "{{ base_url }}/ticket/{{ ticketId }}"
+    name: /ticket/{ticketId}
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1678959506297
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_wrk_a3b785a92973416985489c4d7e5957cb206d0f3e
+    parentId: fld_wrk_a3b785a92973416985489c4d7e5957cb346d34a0
+    modified: 1678959506295
+    created: 1678959506295
+    url: "{{ base_url }}/ticket/{{ ticketId }}"
+    name: /ticket/{ticketId}
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "deets": "I am unable to access course XYZ since yesterday",
+          "categories": [
+            "XYZ2",
+            "Operational"
+          ]
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1678959506295
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_wrk_a3b785a92973416985489c4d7e5957cb3cd49902
+    parentId: fld_wrk_a3b785a92973416985489c4d7e5957cb346d34a0
+    modified: 1678959506293
+    created: 1678959506293
+    url: "{{ base_url }}/ticket/{{ ticketId }}"
+    name: /ticket/{ticketId}
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1678959506293
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_86e696b9478f4537a2a7145449de734e6de5cff4
+    parentId: wrk_a3b785a92973416985489c4d7e5957cb
+    modified: 1678959506314
+    created: 1678959506311
+    name: Base environment
+    data:
+      base_url: "{{ scheme }}://{{ host }}{{ base_path }}"
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1678959506311
+    _type: environment
+  - _id: jar_86e696b9478f4537a2a7145449de734e6de5cff4
+    parentId: wrk_a3b785a92973416985489c4d7e5957cb
+    modified: 1678959513964
+    created: 1678959513964
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_072e5eb1c32e4cceab218686ab28befe
+    parentId: wrk_a3b785a92973416985489c4d7e5957cb
+    modified: 1678964695308
+    created: 1678959509024
+    fileName: PIND 0.1 0.1
+    contents: >
+      openapi: 3.0.3
+
+      info:
+        title: PIND 0.1
+        description: PIND doc description
+        version: "0.1"
+      servers:
+        - url: http://127.0.0.1:5000
+          variables: {}
+      tags:
+        - name: ticket
+          description: everything about tickets
+        - name: staff actions
+          description: actions that can only be performed by staff
+        - name: user
+          description: user registration and login
+      paths:
+        /register:
+          description: register new user
+          post:
+            tags:
+              - user
+            summary: ""
+            description: Register a new user
+            requestBody:
+              required: true
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        example: andrewthangaraj@support.iitm.ac.in
+                      user_type:
+                        type: string
+                        example: staff
+                      password:
+                        type: string
+                        example: underwearsarethebest
+                    required:
+                      - email
+                      - password
+                      - user_type
+            operationId: userGen
+            responses:
+              '200':
+                description: User registered successfully  
+              '401':
+                description: Conflict
+                content:
+                  application/json:
+                    examples:
+                      401 result:
+                        value: account already exists with this email 
+        /login:
+          post:
+            tags: 
+              - user
+            summary: ""
+            description: Log in an existing user
+            requestBody:
+              required: true
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        example: andrewthangaraj@support.iitm.ac.in
+                      password:
+                        type: string
+                        example: pass1234
+                    required:
+                      - email
+                      - password
+            operationId: userLogin
+            responses:
+              '200':
+                description: User authenticated successfully
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        access_token:
+                          type: string
+                          example: XcisyoBcluyhsBVLUKBVF
+              '401':
+                description: Invalid credentials
+                content:
+                  application/json:
+                    examples:
+                      401 result:
+                        value: email and password do not matcht    
+        
+        /ticket:
+          description: operations related to tickets
+          post:
+            summary: ""
+            description: create a new ticket for a given user id (student only)
+            requestBody:
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      userId:
+                        type: integer
+                        example: 2
+                      deets:
+                        type: string
+                        example: I am unable to access course XYZ
+                      date:
+                        type: integer
+                        example: 1231231
+                      categories:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          - XYZ
+                          - Operational
+            operationId: ticket1
+            responses:
+              "201":
+                description: sample success response - return newly created ticket
+                content:
+                  application/json:
+                    examples:
+                      201 result:
+                        value:
+                          ticket_id: 3
+                          user_id: 2
+                          deets: I am unable to  access course XYZ
+                          status: Open
+                          replies: []
+                          likes: 0
+                          categories:
+                            - XYZ
+                            - Operational
+              "400":
+                description: sample bad request response
+                content:
+                  application/json:
+                    examples:
+                      400 result:
+                        value: bad request
+              "401":
+                description: sample unauthorized response
+                content:
+                  application/json:
+                    examples:
+                      401 result:
+                        value: you are not authorized to make this request
+              "500":
+                description: sample internal error response
+                content:
+                  application/json:
+                    examples:
+                      500 result:
+                        value: internal error
+            tags:
+              - ticket
+          get:
+            summary: ""
+            description: get paginated tickets for a user
+            parameters:
+              - in: query
+                name: page
+                schema:
+                  type: integer
+                  description: page number
+                  example: 1
+
+              - in: query
+                name: size
+                schema:
+                  type: integer
+                  description: maximum tickets in the response
+                  example: 2
+
+            operationId: ticket2
+            responses:
+              "200":
+                description: sample success response - return tickets
+                content:
+                  application/json:
+                    examples:
+                      200 result:
+                        value:
+                          tickets:
+                            - {
+                                ticket_id: 3,
+                                user_id: 2,
+                                deets: I am unable to  access course XYZ,
+                                status: Open,
+                                replies: [],
+                                likes: 0,
+                                categories: [XYZ, Operational],
+                              }
+                            - {
+                                ticket_id: 4,
+                                user_id: 2,
+                                deets: Regarding graded assignment,
+                                status: Open,
+                                replies: [],
+                                likes: 2,
+                                categories: [Graded],
+                              }
+
+              "404":
+                description: sample not found response
+                content:
+                  application/json:
+                    examples:
+                      404 result:
+                        value: no tickets found
+
+              "500":
+                description: sample internal error response
+                content:
+                  application/json:
+                    examples:
+                      500 result:
+                        value: internal error
+            tags:
+              - ticket
+
+        /ticket/{ticketId}:
+          description: Specific ticket details
+          get:
+            summary: ""
+            description: get ticket details by ticketId
+            parameters:
+              - name: ticketId
+                description: id of ticket
+                required: true
+                in: path
+                schema:
+                  type: integer
+                  example: 3
+
+            operationId: ticketB1
+            responses:
+              "200":
+                description: sample success response - return ticket
+                content:
+                  application/json:
+                    examples:
+                      200 result:
+                        value:
+                          ticket_id: 3
+                          user_id: 2
+                          deets: I am unable to  access course XYZ
+                          status: Open
+                          replies: []
+                          likes: 0
+                          categories:
+                            - XYZ
+                            - Operational
+
+              "404":
+                description: sample not found response
+                content:
+                  application/json:
+                    examples:
+                      404 result:
+                        value: ticket not found
+
+              "500":
+                description: sample internal error response
+                content:
+                  application/json:
+                    examples:
+                      500 result:
+                        value: internal error
+
+            tags:
+              - ticket
+          put:
+            summary: ""
+            description: update a given ticket
+            parameters:
+              - name: ticketId
+                description: id of ticket
+                required: true
+                in: path
+                schema:
+                  type: integer
+                  example: 3
+            requestBody:
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      deets:
+                        type: string
+                        example: I am unable to access course XYZ since yesterday
+                      categories:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          - XYZ2
+                          - Operational
+            operationId: ticketB2
+            responses:
+              "200":
+                description: sample success response - return updated ticket
+                content:
+                  application/json:
+                    examples:
+                      200 result:
+                        value:
+                          ticket_id: 3
+                          user_id: 2
+                          deets: I am unable to  access course XYZ2 since yesterday
+                          status: Open
+                          replies: []
+                          likes: 0
+                          categories:
+                            - XYZ2
+                            - Operational
+              "400":
+                description: sample bad request response
+                content:
+                  application/json:
+                    examples:
+                      400 result:
+                        value: bad request
+              "401":
+                description: sample unauthorized response
+                content:
+                  application/json:
+                    examples:
+                      401 result:
+                        value: you are not authorized to make this request
+              "404":
+                description: sample not found response
+                content:
+                  application/json:
+                    examples:
+                      404 result:
+                        value: ticket not found
+              "500":
+                description: sample internal error response
+                content:
+                  application/json:
+                    examples:
+                      500 result:
+                        value: internal error
+            tags:
+              - ticket
+          delete:
+            summary: ""
+            description: update a given ticket
+            parameters:
+              - name: ticketId
+                description: id of ticket
+                required: true
+                in: path
+                schema:
+                  type: integer
+                  example: 3
+
+            operationId: ticketB3
+            responses:
+              "200":
+                description: sample success response - deleted successfully
+                content:
+                  application/json:
+                    examples:
+                      200 result:
+                        value:
+                          status: true
+                          message: deleted successfully
+              "400":
+                description: sample bad request response
+                content:
+                  application/json:
+                    examples:
+                      400 result:
+                        value: bad request
+              "401":
+                description: sample unauthorized response
+                content:
+                  application/json:
+                    examples:
+                      401 result:
+                        value: you are not authorized to make this request
+
+              "404":
+                description: sample not found response
+                content:
+                  application/json:
+                    examples:
+                      401 result:
+                        value: ticket not found
+
+              "500":
+                description: sample internal error response
+                content:
+                  application/json:
+                    examples:
+                      500 result:
+                        value: internal error
+            tags:
+              - ticket
+    contentType: yaml
+    _type: api_spec
+  - _id: env_env_86e696b9478f4537a2a7145449de734e6de5cff4_sub__8f9f0438
+    parentId: env_86e696b9478f4537a2a7145449de734e6de5cff4
+    modified: 1678959506312
+    created: 1678959506312
+    name: OpenAPI env 127.0.0.1:5000
+    data:
+      scheme: http
+      base_path: ""
+      host: 127.0.0.1:5000
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1678959506312
+    _type: environment
