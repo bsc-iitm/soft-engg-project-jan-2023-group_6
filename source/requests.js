@@ -21,10 +21,26 @@ fetch('/ticket/mark_solved', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
-        "Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG5kb2UiLCJleHAiOjE2ODE2NjMxNDV9.Gnq3P5mNbo-NUTfmV29iKt-EAd73_ZNB_M9sHgErSHM",     
-    },
+        "Authorization":token    },
     body: JSON.stringify({
         "ticket_id": '4'
+    }),
+})
+.then(r => r.json())
+.then(l=> console.log(l))
+.catch((error) => {
+    console.error('Error:', error);
+});
+// reopen
+fetch('/ticket/reopen', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        "Authorization":token,     
+    },
+    body: JSON.stringify({
+        "ticket_id": '4',
+        "user_id": 4
     }),
 })
 .then(r => r.json())
@@ -38,8 +54,7 @@ fetch('/ticket/mark_duplicate', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
-        "Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG5kb2UiLCJleHAiOjE2ODE2NjMxNDV9.Gnq3P5mNbo-NUTfmV29iKt-EAd73_ZNB_M9sHgErSHM",     
-    },
+        "Authorization":token    },
     body: JSON.stringify({
         "ticket_id": '4',
         "duplicate_id": '3'
@@ -50,12 +65,28 @@ fetch('/ticket/mark_duplicate', {
 .catch((error) => {
     console.error('Error:', error);
 });
+//reverse duplicate
+fetch('/ticket/reverse_duplicate', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        "Authorization":token    },
+    body: JSON.stringify({
+        "ticket_id": '4',
+    }),
+})
+.then(r => r.json())
+.then(l=> console.log(l))
+.catch((error) => {
+    console.error('Error:', error);
+});
+
 // likes
 fetch('/ticket/like', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
-        "Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG5kb2UiLCJleHAiOjE2ODE2NjMxNDV9.Gnq3P5mNbo-NUTfmV29iKt-EAd73_ZNB_M9sHgErSHM",     
+        "Authorization":token,     
     },
     body: JSON.stringify({
         "ticket_id": '4',
@@ -67,6 +98,23 @@ fetch('/ticket/like', {
 .catch((error) => {
     console.error('Error:', error);
 });
+// likes
+fetch('/ticket/unlike', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        "Authorization":token    },
+    body: JSON.stringify({
+        "ticket_id": '4',
+        "user_id": '4',
+    }),
+})
+.then(r => r.json())
+.then(l=> console.log(l))
+.catch((error) => {
+    console.error('Error:', error);
+});
+
 // replies
 fetch('/ticket/reply', {
     method: 'POST',
@@ -78,6 +126,40 @@ fetch('/ticket/reply', {
         "ticket_id": '4',
         "user_id": '1',
         "content": 'reply 1'
+    }),
+})
+.then(r => r.json())
+.then(l=> console.log(l))
+.catch((error) => {
+    console.error('Error:', error);
+});
+// update ticket
+fetch('/ticket/update', {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json',
+        "Authorization":token    },
+    body: JSON.stringify({
+        "ticket_id": '4',
+        "user_id": '4',
+        "title": "new updated title",
+        "content":"new updated content"
+    }),
+})
+.then(r => r.json())
+.then(l=> console.log(l))
+.catch((error) => {
+    console.error('Error:', error);
+});
+// dekete ticket
+fetch('/ticket/delete', {
+    method: 'DELETE',
+    headers: {
+        'Content-Type': 'application/json',
+        "Authorization":token    },
+    body: JSON.stringify({
+        "ticket_id": '4',
+        "user_id": '4',
     }),
 })
 .then(r => r.json())
