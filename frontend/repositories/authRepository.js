@@ -3,6 +3,6 @@ export default ($axios) => ({
     return $axios.post('/login', params)
   },
   signup(params) {
-    return $axios.post('/signup', params)
+    return $axios.post('/register', params)
   },
 })
