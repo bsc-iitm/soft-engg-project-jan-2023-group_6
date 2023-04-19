@@ -1,9 +1,10 @@
  <template>
-  <div
-    v-if="ticket"
-    style="width: 100%; display: flex; flex-direction: column; gap: 30px"
-  >
-    <v-card outlined style="width: 100%; padding: 20px">
+  <div style="width: 100%; display: flex; flex-direction: column; gap: 30px">
+    <v-btn color="blue" style="max-width: 100px" @click="selectTicket(null)"
+      >Back
+    </v-btn>
+
+    <v-card v-if="ticket" outlined style="width: 100%; padding: 20px">
       <div style="display: flex; gap: 40px">
         <span>Ticket #{{ ticket.id }}</span>
         <span v-if="ticket.tags" style="margin-left: 40px"
@@ -54,11 +55,28 @@
           >Mark as solved</v-btn
         >
       </div>
-
+      <div
+        v-for="reply in ticket.replies"
+        :key="reply[0] + 'b' + reply[1]"
+        style="margin-top: 20px"
+      >
+        <v-card
+          outlined
+          style="
+            width: 100%;
+            padding: 4px;
+            margin: 20px 0 10px 0;
+            min-height: 130px;
+          "
+        >
+          <v-card-title style="font-size: 14px">{{ reply[0] }}</v-card-title>
+          <v-card-subtitle>{{ reply[1] }}</v-card-subtitle>
+        </v-card>
+      </div>
       <div v-if="allowReply" style="margin-top: 20px">
         <v-textarea
           v-model="newReply"
-          style="margin-bottom: 20px; width: 100%"
+          style="margin-bottom: 0px; width: 100%"
           :error-messages="newReplyErrors"
           label="details"
           required
@@ -66,7 +84,7 @@
           @input="$v.newReply.$touch()"
           @blur="$v.newReply.$touch()"
         ></v-textarea>
-        <v-btn color="blue" style="color: white">Reply</v-btn>
+        <v-btn color="blue" style="color: white" @click="submit">Reply</v-btn>
       </div>
     </v-card>
   </div>
@@ -112,7 +130,10 @@ export default {
     this.getTicket()
   },
   methods: {
-    ...mapActions({ switchTab: 'user/switchTab' }),
+    ...mapActions({
+      switchTab: 'user/switchTab',
+      selectTicket: 'user/selectTicket',
+    }),
     async getTicket() {
       const { data } = await this.$repositories.ticket.getTicket({
         ticket_id: this.selectedTicket,
@@ -128,12 +149,12 @@ export default {
     },
     async replyHandler() {
       const data = await this.$repositories.ticket.replyTicket({
-        title: this.title,
-        newReply: this.newReply,
-        date: Date.now(),
+        ticket_id: this.selectedTicket,
+        content: this.newReply,
       })
-      if (data && data.data && data.data.success && data.status === 200) {
-        this.ticket.replies.push([this.user.id, this.newReply])
+      console.log(data)
+      if (data && data.status === 200) {
+        this.ticket.replies.push([this.user.username, this.newReply])
       }
     },
     async markAsSolved() {

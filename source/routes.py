@@ -240,10 +240,11 @@ def reply_to_ticket(current_user):
         data = json.loads(request.data)
         ticket_id = data['ticket_id']
         user_id = current_user.id
+        user_name = current_user.username
         content = data['content']
         try:
             replies = loads(db.session.query(Ticket).filter(Ticket.id==ticket_id ).first().replies)
-            replies.append((user_id, content))
+            replies.append((user_name, content))
             Ticket.query.filter_by(id=ticket_id ).update(dict(replies = dumps(replies)))
             db.session.commit()
         except:
