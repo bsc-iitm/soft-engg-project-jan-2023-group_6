@@ -14,4 +14,7 @@ export default ($axios) => ({
   markAsSolved(params) {
     return $axios.post('/ticket/mark_solved', params)
   },
+  likeTicket(params) {
+    return $axios.post('/ticket/mark_solved', params)
+  },
 })

@@ -43,17 +43,28 @@
             {{ ticket.status }}
           </span></span
         >
-        <v-btn v-if="user && user.admin" color="orange" style="color: white"
-          >Mark as duplicate</v-btn
-        >
-        <v-btn
-          v-if="user && !user.admin && allowReply && !ticket.user_id"
-          color="green"
-          style="color: white"
-          :disabled="ticket.status == 'Solved'"
-          @click="markAsSolved"
-          >Mark as solved</v-btn
-        >
+        <div>
+          <!-- <v-btn v-if="user && user.admin" color="orange" style="color: white"
+            >Mark as duplicate</v-btn
+          > -->
+          <v-btn
+            :disabled="
+              user.admin || (ticket.likes && ticket.likes.includes(user.id))
+            "
+            color="blue"
+            style="color: white; margin: 0 10px"
+            @click="likeTicket"
+            >Like {{ ticket.likes && ticket.likes.length }}</v-btn
+          >
+          <v-btn
+            v-if="user && !user.admin && allowReply && !ticket.user_id"
+            color="green"
+            style="color: white"
+            :disabled="ticket.status == 'Solved'"
+            @click="markAsSolved"
+            >Mark as solved</v-btn
+          >
+        </div>
       </div>
       <div
         v-for="reply in ticket.replies"
@@ -152,7 +163,6 @@ export default {
         ticket_id: this.selectedTicket,
         content: this.newReply,
       })
-      console.log(data)
       if (data && data.status === 200) {
         this.ticket.replies.push([this.user.username, this.newReply])
       }
@@ -161,9 +171,16 @@ export default {
       const data = await this.$repositories.ticket.markAsSolved({
         ticket_id: this.ticket.id,
       })
-      console.log(data)
       if (data && data.status === 201) {
         this.ticket.status = 'Solved'
+      }
+    },
+    async likeTicket() {
+      const data = await this.$repositories.ticket.likeTicket({
+        ticket_id: this.ticket.id,
+      })
+      if (data && data.status === 201) {
+        this.ticket.likes.push(this.user.id)
       }
     },
   },
