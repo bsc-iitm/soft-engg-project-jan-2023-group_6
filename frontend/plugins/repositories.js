@@ -9,9 +9,12 @@ export default (ctx, inject) => {
     },
   })
 
+  console.log(ctx.$cookies.get('user'))
   if (ctx.$cookies.get('user')) {
     api.interceptors.request.use(function (config) {
-      config.headers.Authorization = `Bearer ${ctx.$cookies.get('user').token}`
+      config.headers.Authorization = `Bearer ${
+        ctx.$cookies.get('user') && ctx.$cookies.get('user').token
+      }`
 
       return config
     })

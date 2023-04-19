@@ -1,6 +1,14 @@
 export default ($axios) => ({
   getTickets(params) {
-    return $axios.get('/user/tickets', { params })
+    return $axios.get(
+      '/user/tickets',
+      { params },
+      {
+        headers: {
+          Authorization: 'abc',
+        },
+      }
+    )
   },
   getTicket(params) {
     return $axios.get('/user/ticket', { params })

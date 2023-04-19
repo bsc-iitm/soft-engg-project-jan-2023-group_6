@@ -90,6 +90,7 @@ export default {
   data() {
     return {
       tickets: [],
+      retryCounts: 1,
     }
   },
   computed: {
@@ -107,8 +108,15 @@ export default {
       selectTicket: 'user/selectTicket',
     }),
     async getTickets() {
-      const { data } = await this.$repositories.ticket.getTickets()
-      this.tickets = Object.values(data)
+      try {
+        const data = await this.$repositories.ticket.getTickets()
+        console.log(data)
+        this.tickets = Object.values(data.data)
+      } catch {
+        if (this.retryCounts < 5) {
+          window.location.reload()
+        }
+      }
     },
   },
 }
