@@ -4,6 +4,8 @@
 
 `pip install requirements.txt`
 
+_make sure you are in the `source/` folder_
+
 ## Development Server
 
 `python main.py`
