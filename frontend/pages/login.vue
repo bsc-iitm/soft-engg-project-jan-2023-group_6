@@ -3,27 +3,28 @@
     <form class="form-align">
       <v-text-field
         v-model="username"
-        :error-messages="usernameErros"
+        :error-messages="usernameErrors"
         label="username"
-        style="width: 100%"
         required
+        outlined
+        style="width: 100%"
         @input="$v.username.$touch()"
         @blur="$v.username.$touch()"
-        outlined
       ></v-text-field>
       <v-text-field
-        style="margin-bottom: 20px; width: 100%"
         v-model="password"
         :error-messages="passwordErrors"
         label="password"
         required
+        outlined
+        style="margin-bottom: 20px; width: 100%"
         @input="$v.password.$touch()"
         @blur="$v.password.$touch()"
-        outlined
       ></v-text-field>
       <v-btn class="mr-4" style="min-width: 110px" @click="submit">
         login
       </v-btn>
+      <span class="mt-2">Don't have an account? <a href="/signup" style="text-decoration: none;">SignUp instead</a></span>
     </form>
   </v-row>
 </template>
@@ -48,7 +49,7 @@ export default {
   }),
 
   computed: {
-    usernameErros() {
+    usernameErrors() {
       const errors = []
       if (!this.$v.username.$dirty) return errors
 
@@ -68,7 +69,7 @@ export default {
     ...mapActions({ addUser: 'user/addUser' }),
     submit() {
       this.$v.$touch()
-      if (!this.usernameErros.length && !this.passwordErrors.length) {
+      if (!this.usernameErrors.length && !this.passwordErrors.length) {
         this.handleLogin()
       }
     },

@@ -52,6 +52,7 @@
         @blur="$v.checkbox.$touch()"
       ></v-checkbox>
       <v-btn class="mr-4" @click="submit">Submit</v-btn>
+      <span class="mt-2">Already have an account? <a href="/login" style="text-decoration: none;">Login instead</a></span>
     </form>
   </v-row>
 </template>
