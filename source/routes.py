@@ -365,11 +365,9 @@ def delete_faq(current_user, faq_id):
     try:
         if(current_user.admin == 0):
             return "Forbidden", 403
-        print(faq_id)
         faq_to_delete = Faq.query.filter_by(id = faq_id).first()
         db.session.delete(faq_to_delete)
         db.session.commit()
         return {'success': True}
-    except Exception as err:
-        print(err)
+    except:
         return 'Bad Request', 400
