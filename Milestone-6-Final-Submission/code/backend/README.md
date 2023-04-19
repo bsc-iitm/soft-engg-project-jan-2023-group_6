@@ -4,7 +4,7 @@
 
 `pip install requirements.txt`
 
-_make sure you are in the `source/` folder_
+_make sure you are in the `backend/` folder_
 
 ## Development Server
 
