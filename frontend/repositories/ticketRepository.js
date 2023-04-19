@@ -11,4 +11,7 @@ export default ($axios) => ({
   replyTicket(params) {
     return $axios.post('/ticket/reply', params)
   },
+  markAsSolved(params) {
+    return $axios.post('/ticket/mark_solved', params)
+  },
 })

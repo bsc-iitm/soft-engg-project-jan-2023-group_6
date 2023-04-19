@@ -15,7 +15,7 @@
         style="
           width: 100%;
           padding: 4px;
-          margin: 20px 0 30px 0;
+          margin: 20px 0 10px 0;
           min-height: 130px;
         "
       >
@@ -45,9 +45,17 @@
         <v-btn v-if="user && user.admin" color="orange" style="color: white"
           >Mark as duplicate</v-btn
         >
+        <v-btn
+          v-if="user && !user.admin && allowReply && !ticket.user_id"
+          color="green"
+          style="color: white"
+          :disabled="ticket.status == 'Solved'"
+          @click="markAsSolved"
+          >Mark as solved</v-btn
+        >
       </div>
 
-      <div v-if="allowReply">
+      <div v-if="allowReply" style="margin-top: 20px">
         <v-textarea
           v-model="newReply"
           style="margin-bottom: 20px; width: 100%"
@@ -115,17 +123,26 @@ export default {
     submit() {
       this.$v.$touch()
       if (!this.newReplyErrors.length) {
-        this.createTicketHandler()
+        this.replyHandler()
       }
     },
-    async createTicketHandler() {
-      const data = await this.$repositories.ticket.createTicket({
+    async replyHandler() {
+      const data = await this.$repositories.ticket.replyTicket({
         title: this.title,
         newReply: this.newReply,
         date: Date.now(),
       })
       if (data && data.data && data.data.success && data.status === 200) {
         this.ticket.replies.push([this.user.id, this.newReply])
+      }
+    },
+    async markAsSolved() {
+      const data = await this.$repositories.ticket.markAsSolved({
+        ticket_id: this.ticket.id,
+      })
+      console.log(data)
+      if (data && data.status === 201) {
+        this.ticket.status = 'Solved'
       }
     },
   },
